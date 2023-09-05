@@ -19,15 +19,17 @@ function Board() {
         const active = event.active.data.current
         const currentColumn = active.y;
         const currentRow = active.x;
-        console.log(active)
 
         //destination square
         const {over} = event;
         const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
 
         if(over){
-            newPieceBoard[currentColumn][currentRow]= '';
-            newPieceBoard[destinationColumn][destinationRow] = active.name;
+            //check if the destination square is occupied
+            if(newPieceBoard[destinationColumn][destinationRow]==''){
+                newPieceBoard[currentColumn][currentRow]= '';
+                newPieceBoard[destinationColumn][destinationRow] = active.name;
+            }
         }
 
         setPieceBoard(newPieceBoard)
