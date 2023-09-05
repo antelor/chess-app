@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import '../styles/Square.scss'
 import {useDroppable} from '@dnd-kit/core';
 
 interface SquareProps {
     id: string, 
-    content: unknown
+    content: any
 }
   
 function Square(props: SquareProps) {

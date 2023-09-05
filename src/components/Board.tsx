@@ -1,54 +1,69 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {useState} from 'react';
 import Piece from './Piece';
 import Square from './Square';
 import '../styles/Board.scss';
-import {basicBoard} from '../assets/basicBoard';
+import {basicBoard, startingPieceBoard} from '../assets/basicBoard';
 
 import {DndContext} from '@dnd-kit/core';
 
 
 function Board() {
-    const [board, setBoard] = useState(basicBoard);
+    //board with every piece location info
+    const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
+    
+    function handleDragEnd(event: any) {
+        const newPieceBoard = {...pieceBoard};
 
-    const [parent, setParent] = useState(null);
-    
-    function handleDragEnd(event) {
+        //dragged piece
+        const active = event.active.data.current
+        const currentColumn = active.y;
+        const currentRow = active.x;
+        console.log(active)
+
+        //destination square
         const {over} = event;
-    
-        // If the item is dropped over a container, set it as the parent
-        // otherwise reset the parent to `null`
-        setParent(over ? over.id : null);
+        const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
+
+        if(over){
+            newPieceBoard[currentColumn][currentRow]= '';
+            newPieceBoard[destinationColumn][destinationRow] = active.name;
+        }
+
+        setPieceBoard(newPieceBoard)
+    }
+
+    function checkPieceInSquare(square: string){
+        const [row, column] = getCoordinatesFromSquareName(square)
+
+        if(pieceBoard[column][row] != '') return pieceBoard[column][row];
+        else return null;
+    }
+
+    function getCoordinatesFromSquareName(square: string){
+        const row = square.charCodeAt(0)-97;
+        const column = Math.abs(parseInt(square[1])-8);
+
+        return [row, column]
     }
 
     return (
         <>
             <div className='Board'>
                 <DndContext onDragEnd={handleDragEnd}>
-                    {parent === null ? <Piece name="a" parent=''/> : null}
-
-                    {board.map((row, index) => (
+                    {basicBoard.map((row, index) => (
                         <div className='BoardRow' key={index}>
-                            {row.map((square) => 
+                            {row.map((square, squareIndex) => 
                                 <Square 
                                     key={square} 
                                     id={square} 
-                                    content={parent === square 
-                                        ? <Piece name="a" parent={parent}/> 
-                                        : square}
+                                    content={checkPieceInSquare(square) 
+                                        ? <Piece name={checkPieceInSquare(square)} x={squareIndex} y={index}/> 
+                                        : <span>{square}</span>}
                                 />
                             )}
                         </div>
                     ))}
-
-                    {
-                    /*
-                    {board.map( (row, index) => <div className='BoardRow' key={index}>
-                        {row.map( (square, rowIndex) =>
-                            <Square 
-                            key={rowIndex}
-                            />
-                        )}
-                        </div>)}*/}
                 </DndContext>
             </div>
             

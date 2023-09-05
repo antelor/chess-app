@@ -9,4 +9,15 @@ const basicBoard = [
     [ 'a1', 'b1', 'c1','d1','e1','f1','g1','h1'],
 ]
 
-export {basicBoard}
+const startingPieceBoard = [
+    [ 'r', 'n', 'b','q','k','b','n','r'],
+    [ 'p', 'p', 'p','p','p','p','p','p'],
+    [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
+    [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
+    [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
+    [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
+    [ 'p', 'p', 'p','p','p','p','p','p'],
+    [ 'r', 'n', 'b','q','k','b','n','r'],
+]
+
+export {basicBoard, startingPieceBoard}

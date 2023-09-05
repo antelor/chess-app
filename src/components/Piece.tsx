@@ -3,15 +3,19 @@ import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
 
 interface PieceProps {
-    name: string;
-    parent: string;
+    name: string | null;
+    x: number,
+    y: number
 }
   
-function Piece({name, parent}: PieceProps) {
+function Piece({name, x, y}: PieceProps) {
     const {attributes, listeners, setNodeRef, transform} = useDraggable({
-        id: 'draggable',
+        //id: "xy"
+        id: (x+''+y),
         data:{
-            parent
+            name,
+            x,
+            y
         }
     });
 
