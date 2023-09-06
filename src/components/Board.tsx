@@ -37,15 +37,70 @@ function Board() {
     }
 
     function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
-        if(pieceName[0]=='w'){
-            if (destinationColumn < currentColumn) return true;
+        const color = pieceName[0];
+        const piece = pieceName[1];
+
+        //pawn
+        if(piece=='p'){
+            if(color=='w'){
+                if (destinationColumn < currentColumn) return true;
+                else return false;
+            }
+
+            if(color[0]=='b'){
+                if (destinationColumn > currentColumn) return true;
+                else return false;
+            }
+        }
+
+        //rook
+        if(piece=='r'){
+            if( (destinationColumn!=currentColumn) && (destinationRow==currentRow) ) return true;
+            if( (destinationColumn==currentColumn) && (destinationRow!=currentRow) ) return true;
             else return false;
         }
-        if(pieceName[0]=='b'){
-            if (destinationColumn > currentColumn) return true;
+
+        //bishop
+        if(piece=='b'){
+            if( (destinationColumn!=currentColumn) && (destinationRow!=currentRow) ){
+                if( Math.abs(destinationColumn-currentColumn) == Math.abs(destinationRow-currentRow)){
+                    return true;
+                }
+            } 
             else return false;
+        }
+
+        //queen
+        if(piece=='q'){
+            if( (destinationColumn!=currentColumn) && (destinationRow==currentRow) ) return true;
+            if( (destinationColumn==currentColumn) && (destinationRow!=currentRow) ) return true;
+            if( (destinationColumn!=currentColumn) && (destinationRow!=currentRow) ){
+                if( Math.abs(destinationColumn-currentColumn) == Math.abs(destinationRow-currentRow)){
+                    return true;
+                }
+            } 
+            else return false;
+        }
+
+        //king
+        if(piece=='k'){
+            if( Math.abs(destinationColumn-currentColumn)==1 && Math.abs(destinationRow-currentRow)==1) return true;
+            else return false;
+        }
+
+        //knight
+        if(piece=='n'){
+            if(Math.abs(destinationRow-currentRow)==2){
+                if(Math.abs(destinationColumn-currentColumn)==1) return true
+                else return false;
+            }
+            if(Math.abs(destinationColumn-currentColumn)==2){
+                if(Math.abs(destinationRow-currentRow)==1) return true
+                else return false;
+            }
         }
     }
+        
 
     function checkPieceInSquare(square: string){
         const [row, column] = getCoordinatesFromSquareName(square)
