@@ -4,7 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 12.5%;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border: 1px solid black;
+}
+
+.even {
+    background: #CCC
+}
+
+.odd {
+    background: #FFF
 }

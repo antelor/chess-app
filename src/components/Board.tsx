@@ -58,7 +58,13 @@ function Board() {
                             {row.map((square, squareIndex) => 
                                 <Square 
                                     key={square} 
-                                    id={square} 
+                                    id={square}
+                                    className={
+                                        //to get checkered background pattern
+                                        (index%2==0) ? 
+                                            (squareIndex%2==0) ? 'even' : 'odd' :
+                                            (squareIndex%2==0) ? 'odd' : 'even'
+                                    } 
                                     content={checkPieceInSquare(square) 
                                         ? <Piece name={checkPieceInSquare(square)} x={squareIndex} y={index}/> 
                                         : <></>}

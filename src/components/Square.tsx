@@ -4,19 +4,17 @@ import {useDroppable} from '@dnd-kit/core';
 
 interface SquareProps {
     id: string, 
-    content: any
+    content: any,
+    className: string
 }
   
 function Square(props: SquareProps) {
-    const {isOver, setNodeRef} = useDroppable({
+    const {setNodeRef} = useDroppable({
         id: props.id,
-    });    
-    const style = {
-        color: isOver ? 'green' : undefined,
-    };
+    });
 
     return (
-        <div className="Square" ref={setNodeRef} style={style}>
+        <div className={'Square ' + props.className} ref={setNodeRef}>
             {props.content}
         </div>
     )
