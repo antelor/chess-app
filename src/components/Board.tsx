@@ -61,7 +61,7 @@ function Board() {
                                     id={square} 
                                     content={checkPieceInSquare(square) 
                                         ? <Piece name={checkPieceInSquare(square)} x={squareIndex} y={index}/> 
-                                        : <span>{square}</span>}
+                                        : <></>}
                                 />
                             )}
                         </div>

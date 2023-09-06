@@ -10,14 +10,14 @@ const basicBoard = [
 ]
 
 const startingPieceBoard = [
-    [ 'r', 'n', 'b','q','k','b','n','r'],
-    [ 'p', 'p', 'p','p','p','p','p','p'],
+    [ 'br', 'bn', 'bb','bq','bk','bb','bb','br'],
+    [ 'bp', 'bp', 'bp','bp','bp','bp','bp','bp'],
     [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
     [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
     [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
     [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
-    [ 'p', 'p', 'p','p','p','p','p','p'],
-    [ 'r', 'n', 'b','q','k','b','n','r'],
+    [ 'wp', 'wp', 'wp','wp','wp','wp','wp','wp'],
+    [ 'wr', 'wn', 'wb','wq','wk','wb','wn','wr'],
 ]
 
 export {basicBoard, startingPieceBoard}
