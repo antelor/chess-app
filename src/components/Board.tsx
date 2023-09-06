@@ -39,6 +39,12 @@ function Board() {
     function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
         const color = pieceName[0];
         const piece = pieceName[1];
+        const pieceInDestinationSquare = pieceBoard[destinationColumn][destinationRow];
+
+        if(pieceInDestinationSquare){
+            //if the destination piece is the same color, don't allow movement
+            if (pieceInDestinationSquare[0]==color) return false;
+        }
 
         //pawn
         if(piece=='p'){
