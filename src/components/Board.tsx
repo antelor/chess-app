@@ -24,12 +24,27 @@ function Board() {
         const {over} = event;
         const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
 
+        //if the piece was dragged over a square
         if(over){
-            newPieceBoard[currentColumn][currentRow]= '';
-            newPieceBoard[destinationColumn][destinationRow] = active.name;
+            //checks if its a valid movement
+            if(checkMovement(active.name, currentColumn, currentRow, destinationColumn, destinationRow)){
+                newPieceBoard[currentColumn][currentRow]= '';
+                newPieceBoard[destinationColumn][destinationRow] = active.name;
+            }
         }
 
         setPieceBoard(newPieceBoard)
+    }
+
+    function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
+        if(pieceName[0]=='w'){
+            if (destinationColumn < currentColumn) return true;
+            else return false;
+        }
+        if(pieceName[0]=='b'){
+            if (destinationColumn > currentColumn) return true;
+            else return false;
+        }
     }
 
     function checkPieceInSquare(square: string){
