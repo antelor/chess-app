@@ -25,11 +25,8 @@ function Board() {
         const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
 
         if(over){
-            //check if the destination square is occupied
-            if(newPieceBoard[destinationColumn][destinationRow]==''){
-                newPieceBoard[currentColumn][currentRow]= '';
-                newPieceBoard[destinationColumn][destinationRow] = active.name;
-            }
+            newPieceBoard[currentColumn][currentRow]= '';
+            newPieceBoard[destinationColumn][destinationRow] = active.name;
         }
 
         setPieceBoard(newPieceBoard)
