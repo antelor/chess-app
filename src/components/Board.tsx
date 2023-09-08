@@ -12,6 +12,16 @@ function Board() {
     //board with every piece location info
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
     const [colorTurn, setColorTurn] = useState('w');
+
+    function handleDragStart(event: any){
+        //dragged piece
+        const active = event.active.data.current
+        const currentColumn = active.y;
+        const currentRow = active.x;
+        console.log(pieceBoard[currentColumn-1][currentRow]);
+        
+        console.log(active);
+    }
     
     function handleDragEnd(event: any) {
         //dragged piece
@@ -23,7 +33,6 @@ function Board() {
         if(colorTurn!=active.name[0]) return;
 
         const newPieceBoard = {...pieceBoard};
-
 
         //destination square
         const {over} = event;
@@ -137,7 +146,6 @@ function Board() {
             }
         }
     }
-        
 
     function checkPieceInSquare(square: string){
         const [row, column] = getCoordinatesFromSquareName(square)
@@ -156,7 +164,7 @@ function Board() {
     return (
         <>
             <div className='Board'>
-                <DndContext onDragEnd={handleDragEnd}>
+                <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
                     {basicBoard.map((row, index) => (
                         <div className='BoardRow' key={index}>
                             {row.map((square, squareIndex) => 
@@ -169,10 +177,11 @@ function Board() {
                                             (squareIndex%2==0) ? 'even' : 'odd' :
                                             (squareIndex%2==0) ? 'odd' : 'even'
                                     } 
-                                    content={checkPieceInSquare(square) 
+                                >
+                                    {checkPieceInSquare(square) 
                                         ? <Piece name={checkPieceInSquare(square)} x={squareIndex} y={index}/> 
                                         : <></>}
-                                />
+                                </Square>
                             )}
                         </div>
                     ))}

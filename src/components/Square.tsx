@@ -4,7 +4,7 @@ import {useDroppable} from '@dnd-kit/core';
 
 interface SquareProps {
     id: string, 
-    content: any,
+    children: any,
     className: string
 }
   
@@ -15,7 +15,7 @@ function Square(props: SquareProps) {
 
     return (
         <div className={'Square ' + props.className} ref={setNodeRef}>
-            {props.content}
+            {props.children}
         </div>
     )
 }
