@@ -11,14 +11,19 @@ import {DndContext} from '@dnd-kit/core';
 function Board() {
     //board with every piece location info
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
+    const [colorTurn, setColorTurn] = useState('w');
     
     function handleDragEnd(event: any) {
-        const newPieceBoard = {...pieceBoard};
-
         //dragged piece
         const active = event.active.data.current
         const currentColumn = active.y;
         const currentRow = active.x;
+
+        //check if the movement was made by the correct color according to turn
+        if(colorTurn!=active.name[0]) return;
+
+        const newPieceBoard = {...pieceBoard};
+
 
         //destination square
         const {over} = event;
@@ -33,7 +38,12 @@ function Board() {
             }
         }
 
+        //update piece board
         setPieceBoard(newPieceBoard)
+
+        //change turn
+        if(colorTurn=='w') setColorTurn('b');
+        if(colorTurn=='b') setColorTurn('w');
     }
 
     function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
