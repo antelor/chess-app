@@ -41,6 +41,7 @@ function Board() {
         const piece = pieceName[1];
         const pieceInDestinationSquare = pieceBoard[destinationColumn][destinationRow];
 
+        //if there is a piece in the destination square
         if(pieceInDestinationSquare){
             //if the destination piece is the same color, don't allow movement
             if (pieceInDestinationSquare[0]==color) return false;
@@ -48,14 +49,34 @@ function Board() {
 
         //pawn
         if(piece=='p'){
-            if(color=='w'){
-                if (destinationColumn < currentColumn) return true;
-                else return false;
-            }
+            //if the movement is to trade a piece
+            if(pieceInDestinationSquare){
+                if(destinationRow!=currentRow && Math.abs(destinationColumn-currentColumn)==1 && Math.abs(destinationRow-currentRow)==1){
+                    if(color=='w'){
+                        if (destinationColumn < currentColumn ) return true;
+                        else return false;
+                    }
+        
+                    if(color[0]=='b'){
+                        if (destinationColumn > currentColumn) return true;
+                        else return false;
+                    }
+                }
 
-            if(color[0]=='b'){
-                if (destinationColumn > currentColumn) return true;
-                else return false;
+            }
+            //if there is no piece, don't allow diagonal movement
+            else{
+                if(destinationRow==currentRow && Math.abs(destinationColumn-currentColumn)==1){
+                    if(color=='w'){
+                        if (destinationColumn < currentColumn ) return true;
+                        else return false;
+                    }
+        
+                    if(color[0]=='b'){
+                        if (destinationColumn > currentColumn) return true;
+                        else return false;
+                    }
+                }
             }
         }
 
