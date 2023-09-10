@@ -7,23 +7,46 @@ import {basicBoard, startingPieceBoard} from '../assets/basicBoard';
 
 import {DndContext} from '@dnd-kit/core';
 
-
 function Board() {
     //board with every piece location info
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
     const [colorTurn, setColorTurn] = useState('w');
 
     function handleDragStart(event: any){
+        const newPieceBoard = {...pieceBoard};
+
         //dragged piece
-        const active = event.active.data.current
+        const active = event.active.data.current;
         const currentColumn = active.y;
         const currentRow = active.x;
-        console.log(pieceBoard[currentColumn-1][currentRow]);
-        
-        console.log(active);
+
+        //change pieceboard to one where the possible movements have a certain character (a)
+        //then on drag end remove the character before starting
+
+        if(active.name[0]=='w'){
+            if(active.name[1]=='p'){
+                newPieceBoard[currentColumn-1][currentRow]+='a';
+            }
+        }
+
+        setPieceBoard(newPieceBoard);
     }
     
     function handleDragEnd(event: any) {
+        const pieceArray = Object.entries(pieceBoard);
+        
+        const newPieceArray = [];
+        for (const rowArray of pieceArray){
+            const newRow = [];
+            for(let row of rowArray[1]){
+                row = row.replace('a','');
+                newRow.push(row)
+            }
+            newPieceArray.push(newRow);
+        }
+        const newPieceBoard = {...pieceBoard};
+        //const newPieceBoard = {...newPieceArray};
+
         //dragged piece
         const active = event.active.data.current
         const currentColumn = active.y;
@@ -32,7 +55,6 @@ function Board() {
         //check if the movement was made by the correct color according to turn
         if(colorTurn!=active.name[0]) return;
 
-        const newPieceBoard = {...pieceBoard};
 
         //destination square
         const {over} = event;
@@ -69,19 +91,19 @@ function Board() {
         //pawn
         if(piece=='p'){
             //if the movement is to trade a piece
-            if(pieceInDestinationSquare){
+            if(pieceInDestinationSquare && pieceInDestinationSquare!='a'){
                 if(destinationRow!=currentRow && Math.abs(destinationColumn-currentColumn)==1 && Math.abs(destinationRow-currentRow)==1){
                     if(color=='w'){
                         if (destinationColumn < currentColumn ) return true;
                         else return false;
                     }
-        
+                    
                     if(color[0]=='b'){
                         if (destinationColumn > currentColumn) return true;
                         else return false;
                     }
                 }
-
+                
             }
             //if there is no piece, don't allow diagonal movement
             else{
@@ -150,8 +172,8 @@ function Board() {
     function checkPieceInSquare(square: string){
         const [row, column] = getCoordinatesFromSquareName(square)
 
-        if(pieceBoard[column][row] != '') return pieceBoard[column][row];
-        else return null;
+        if(pieceBoard[column][row] != '' && pieceBoard[column][row] != 'a') return pieceBoard[column][row];
+        else return false;
     }
 
     function getCoordinatesFromSquareName(square: string){
@@ -161,27 +183,48 @@ function Board() {
         return [row, column]
     }
 
+    function getSquareClassName(square: string, index: number, squareIndex: number){
+        let squareClass = "";
+        
+        //to get checkered background pattern
+        ((index%2==0) ? 
+        (squareIndex%2==0) ? squareClass+='even' : squareClass+='odd' :
+        (squareIndex%2==0) ? squareClass+='odd' : squareClass+='even');
+        
+        const pieceInSquare = checkPieceInSquare(square);
+        const [squareX, squareY] = getCoordinatesFromSquareName(square);
+
+        //if active
+        if(pieceInSquare!=false && pieceInSquare.length == 3){
+            (pieceInSquare[2] == 'a') ? squareClass+=' squareActive' : "";
+        }
+        else{
+            (pieceBoard[squareY][squareX] == "a") ? squareClass+=' squareActive' : "";
+        }
+
+        return squareClass
+    }
+
     return (
         <>
             <div className='Board'>
                 <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
                     {basicBoard.map((row, index) => (
                         <div className='BoardRow' key={index}>
-                            {row.map((square, squareIndex) => 
-                                <Square 
+
+                            {row.map((square, squareIndex) =>
+                                {const squareClass = getSquareClassName(square, index, squareIndex)
+                                
+                                return <Square 
                                     key={square} 
                                     id={square}
-                                    className={
-                                        //to get checkered background pattern
-                                        (index%2==0) ? 
-                                            (squareIndex%2==0) ? 'even' : 'odd' :
-                                            (squareIndex%2==0) ? 'odd' : 'even'
-                                    } 
-                                >
-                                    {checkPieceInSquare(square) 
-                                        ? <Piece name={checkPieceInSquare(square)} x={squareIndex} y={index}/> 
-                                        : <></>}
-                                </Square>
+                                    className={ squareClass} 
+                                    >
+                                        {checkPieceInSquare(square) 
+                                            ? <Piece name={checkPieceInSquare(square)} x={squareIndex} y={index}/> 
+                                            : <></>}
+                                    </Square>
+                                }
                             )}
                         </div>
                     ))}
