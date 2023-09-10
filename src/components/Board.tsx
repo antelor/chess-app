@@ -32,23 +32,21 @@ function Board() {
 
             //bishop
             if(active.name[1]=='b'){
-                console.log(currentColumn);
-                console.log(currentRow);
                 //up right side movement
                 for(let j = currentColumn, i = currentRow; j >= 0 && i < 8; j--, i++){
-                    newPieceBoard[j][i]+='a';
+                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
                 //up left side movement
                 for(let j = currentColumn, i = currentRow; j >= 0 && i >= 0; j--, i--){
-                    newPieceBoard[j][i]+='a';
+                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
                 //down right side movement
                 for(let j = currentColumn, i = currentRow; j < 8 && i < 8; j++, i++){
-                    newPieceBoard[j][i]+='a';
+                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
                 //down left side movement
                 for(let j = currentColumn, i = currentRow; j < 8 && i >= 0; j++, i--){
-                    newPieceBoard[j][i]+='a';
+                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
             }
         }
@@ -97,7 +95,8 @@ function Board() {
         for (const rowArray of pieceArray){
             const newRow = [];
             for(let row of rowArray[1]){
-                row = row.replace('a','');
+                row = row.replace("a","");
+                console.log(row);
                 newRow.push(row)
             }
             newPieceArray.push(newRow);
