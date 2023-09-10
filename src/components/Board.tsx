@@ -173,7 +173,7 @@ function Board() {
         const [row, column] = getCoordinatesFromSquareName(square)
 
         if(pieceBoard[column][row] != '' && pieceBoard[column][row] != 'a') return pieceBoard[column][row];
-        else return false;
+        else return null;
     }
 
     function getCoordinatesFromSquareName(square: string){
@@ -195,7 +195,7 @@ function Board() {
         const [squareX, squareY] = getCoordinatesFromSquareName(square);
 
         //if active
-        if(pieceInSquare!=false && pieceInSquare.length == 3){
+        if(pieceInSquare!=null && pieceInSquare.length == 3){
             (pieceInSquare[2] == 'a') ? squareClass+=' squareActive' : "";
         }
         else{
