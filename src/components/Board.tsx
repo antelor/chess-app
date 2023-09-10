@@ -33,19 +33,19 @@ function Board() {
             //bishop
             if(active.name[1]=='b'){
                 //up right side movement
-                for(let j = currentColumn, i = currentRow; j >= 0 && i < 8; j--, i++){
+                for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
                     if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
                 //up left side movement
-                for(let j = currentColumn, i = currentRow; j >= 0 && i >= 0; j--, i--){
+                for(let j = currentColumn-1, i = currentRow-1; j >= 0 && i >= 0; j--, i--){
                     if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
                 //down right side movement
-                for(let j = currentColumn, i = currentRow; j < 8 && i < 8; j++, i++){
+                for(let j = currentColumn+1, i = currentRow+1; j < 8 && i < 8; j++, i++){
                     if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
                 //down left side movement
-                for(let j = currentColumn, i = currentRow; j < 8 && i >= 0; j++, i--){
+                for(let j = currentColumn+1, i = currentRow-1; j < 8 && i >= 0; j++, i--){
                     if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
                 }
             }
@@ -92,9 +92,9 @@ function Board() {
         const pieceArray = Object.entries(newPieceBoard);
         
         const newPieceArray = [];
-        for (const rowArray of pieceArray){
+        for (const [rowindex, rowArray] of pieceArray){
             const newRow = [];
-            for(let row of rowArray[1]){
+            for(let row of rowArray){
                 row = row.replace("a","");
                 console.log(row);
                 newRow.push(row)
