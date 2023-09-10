@@ -61,19 +61,7 @@ function Board() {
     }
     
     function handleDragEnd(event: any) {
-        const pieceArray = Object.entries(pieceBoard);
-        
-        const newPieceArray = [];
-        for (const rowArray of pieceArray){
-            const newRow = [];
-            for(let row of rowArray[1]){
-                row = row.replace('a','');
-                newRow.push(row)
-            }
-            newPieceArray.push(newRow);
-        }
-        const newPieceBoard = {...pieceBoard};
-        //const newPieceBoard = {...newPieceArray};
+        let newPieceBoard = {...pieceBoard};
 
         //dragged piece
         const active = event.active.data.current
@@ -94,15 +82,27 @@ function Board() {
             if(checkMovement(active.name, currentColumn, currentRow, destinationColumn, destinationRow)){
                 newPieceBoard[currentColumn][currentRow]= '';
                 newPieceBoard[destinationColumn][destinationRow] = active.name;
+                //change turn
+                if(colorTurn=='w') setColorTurn('b');
+                if(colorTurn=='b') setColorTurn('w');
             }
         }
 
         //update piece board
-        setPieceBoard(newPieceBoard)
+        const pieceArray = Object.entries(newPieceBoard);
+        
+        const newPieceArray = [];
+        for (const rowArray of pieceArray){
+            const newRow = [];
+            for(let row of rowArray[1]){
+                row = row.replace('a','');
+                newRow.push(row)
+            }
+            newPieceArray.push(newRow);
+        }
+        newPieceBoard = {...newPieceArray};
 
-        //change turn
-        if(colorTurn=='w') setColorTurn('b');
-        if(colorTurn=='b') setColorTurn('w');
+        setPieceBoard(newPieceBoard);
     }
 
     function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
