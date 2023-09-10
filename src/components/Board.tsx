@@ -20,6 +20,8 @@ function Board() {
         const currentColumn = active.y;
         const currentRow = active.x;
 
+        if(active.name[0]!=colorTurn) return;
+
         //change pieceboard to one where the possible movements have a certain character (a)
         //then on drag end remove the character before starting
         if(active.name[0]=='w'){
