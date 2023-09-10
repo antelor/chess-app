@@ -22,10 +22,38 @@ function Board() {
 
         //change pieceboard to one where the possible movements have a certain character (a)
         //then on drag end remove the character before starting
-
         if(active.name[0]=='w'){
+            //pawn
             if(active.name[1]=='p'){
                 newPieceBoard[currentColumn-1][currentRow]+='a';
+            }
+
+            //bishop
+            if(active.name[1]=='b'){
+                console.log(currentColumn);
+                console.log(currentRow);
+                //up right side movement
+                for(let j = currentColumn, i = currentRow; j >= 0 && i < 8; j--, i++){
+                    newPieceBoard[j][i]+='a';
+                }
+                //up left side movement
+                for(let j = currentColumn, i = currentRow; j >= 0 && i >= 0; j--, i--){
+                    newPieceBoard[j][i]+='a';
+                }
+                //down right side movement
+                for(let j = currentColumn, i = currentRow; j < 8 && i < 8; j++, i++){
+                    newPieceBoard[j][i]+='a';
+                }
+                //down left side movement
+                for(let j = currentColumn, i = currentRow; j < 8 && i >= 0; j++, i--){
+                    newPieceBoard[j][i]+='a';
+                }
+            }
+        }
+
+        if(active.name[0]=='b'){
+            if(active.name[1]=='p'){
+                newPieceBoard[currentColumn+1][currentRow]+='a';
             }
         }
 
