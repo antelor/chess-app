@@ -69,7 +69,37 @@ function Board() {
                     newPieceBoard[i][currentRow]+='a';
                 }
             }
+        }
 
+        //queen
+        if(active.name[1]=='q'){
+            //diagonals:
+            //up right side movement
+            for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+            }
+            //up left side movement
+            for(let j = currentColumn-1, i = currentRow-1; j >= 0 && i >= 0; j--, i--){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+            }
+            //down right side movement
+            for(let j = currentColumn+1, i = currentRow+1; j < 8 && i < 8; j++, i++){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+            }
+            //down left side movement
+            for(let j = currentColumn+1, i = currentRow-1; j < 8 && i >= 0; j++, i--){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+            }
+
+            //horizontal and vertical:
+            for(let i = 0; i < 8; i++){
+                if(i!==currentRow){
+                    newPieceBoard[currentColumn][i]+='a';
+                }
+                if(i!==currentColumn){
+                    newPieceBoard[i][currentRow]+='a';
+                }
+            }
         }
 
         setPieceBoard(newPieceBoard);
