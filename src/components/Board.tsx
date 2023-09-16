@@ -101,6 +101,48 @@ function Board() {
                 }
             }
         }
+        
+        //king
+        if(active.name[1]=='k'){
+            if(currentColumn==0){
+                newPieceBoard[currentColumn+1][currentRow+1]+='a';
+                newPieceBoard[currentColumn][currentRow+1]+='a';
+                newPieceBoard[currentColumn+1][currentRow]+='a';
+                if(currentRow!=0){
+                    newPieceBoard[currentColumn][currentRow-1]+='a';
+                    newPieceBoard[currentColumn+1][currentRow-1]+='a';
+                }
+            }
+            else if(currentColumn==7){
+                console.log(currentColumn +' '+currentRow)
+                newPieceBoard[currentColumn-1][currentRow-1]+='a';
+                newPieceBoard[currentColumn-1][currentRow]+='a';
+                newPieceBoard[currentColumn][currentRow-1]+='a';
+                
+                if(currentRow!=7){
+                    newPieceBoard[currentColumn-1][currentRow+1]+='a';
+                    newPieceBoard[currentColumn][currentRow+1]+='a';
+                }
+                else{
+                    //newPieceBoard[currentColumn+1][currentRow-1]+='a';
+                    //newPieceBoard[currentColumn][currentRow-1]+='a';
+                }
+            }
+            else{
+                newPieceBoard[currentColumn][currentRow+1]+='a';
+                newPieceBoard[currentColumn+1][currentRow+1]+='a';
+                newPieceBoard[currentColumn+1][currentRow]+='a';
+                newPieceBoard[currentColumn-1][currentRow+1]+='a';
+                newPieceBoard[currentColumn-1][currentRow]+='a';
+                if(currentRow!=0){
+                    newPieceBoard[currentColumn-1][currentRow-1]+='a';
+                    newPieceBoard[currentColumn][currentRow-1]+='a';
+                    newPieceBoard[currentColumn+1][currentRow-1]+='a';
+                }
+            }
+
+            
+        }
 
         setPieceBoard(newPieceBoard);
     }
