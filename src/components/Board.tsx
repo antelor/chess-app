@@ -114,7 +114,6 @@ function Board() {
                 }
             }
             else if(currentColumn==7){
-                console.log(currentColumn +' '+currentRow)
                 newPieceBoard[currentColumn-1][currentRow-1]+='a';
                 newPieceBoard[currentColumn-1][currentRow]+='a';
                 newPieceBoard[currentColumn][currentRow-1]+='a';
@@ -122,10 +121,6 @@ function Board() {
                 if(currentRow!=7){
                     newPieceBoard[currentColumn-1][currentRow+1]+='a';
                     newPieceBoard[currentColumn][currentRow+1]+='a';
-                }
-                else{
-                    //newPieceBoard[currentColumn+1][currentRow-1]+='a';
-                    //newPieceBoard[currentColumn][currentRow-1]+='a';
                 }
             }
             else{
