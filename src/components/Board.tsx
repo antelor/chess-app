@@ -43,19 +43,27 @@ function Board() {
         if(active.name[1]=='b'){
             //up right side movement
             for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
             }
             //up left side movement
             for(let j = currentColumn-1, i = currentRow-1; j >= 0 && i >= 0; j--, i--){
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
             }
             //down right side movement
             for(let j = currentColumn+1, i = currentRow+1; j < 8 && i < 8; j++, i++){
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
             }
             //down left side movement
             for(let j = currentColumn+1, i = currentRow-1; j < 8 && i >= 0; j++, i--){
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
             }
         }
 
