@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {useState} from 'react';
 import Piece from './Piece';
@@ -24,36 +25,37 @@ function Board() {
 
         //change pieceboard to one where the possible movements have a certain character (a)
         //then on drag end remove the character before starting
+        
+        //pawn
         if(active.name[0]=='w'){
-            //pawn
             if(active.name[1]=='p'){
                 newPieceBoard[currentColumn-1][currentRow]+='a';
             }
 
-            //bishop
-            if(active.name[1]=='b'){
-                //up right side movement
-                for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
-                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                }
-                //up left side movement
-                for(let j = currentColumn-1, i = currentRow-1; j >= 0 && i >= 0; j--, i--){
-                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                }
-                //down right side movement
-                for(let j = currentColumn+1, i = currentRow+1; j < 8 && i < 8; j++, i++){
-                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                }
-                //down left side movement
-                for(let j = currentColumn+1, i = currentRow-1; j < 8 && i >= 0; j++, i--){
-                    if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                }
-            }
-        }
-
+        }        
         if(active.name[0]=='b'){
             if(active.name[1]=='p'){
                 newPieceBoard[currentColumn+1][currentRow]+='a';
+            }
+        }
+        
+        //bishop
+        if(active.name[1]=='b'){
+            //up right side movement
+            for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+            }
+            //up left side movement
+            for(let j = currentColumn-1, i = currentRow-1; j >= 0 && i >= 0; j--, i--){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+            }
+            //down right side movement
+            for(let j = currentColumn+1, i = currentRow+1; j < 8 && i < 8; j++, i++){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
+            }
+            //down left side movement
+            for(let j = currentColumn+1, i = currentRow-1; j < 8 && i >= 0; j++, i--){
+                if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
             }
         }
 
@@ -74,10 +76,10 @@ function Board() {
 
         //destination square
         const {over} = event;
-        const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
-
+        
         //if the piece was dragged over a square
         if(over){
+            const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
             //checks if its a valid movement
             if(checkMovement(active.name, currentColumn, currentRow, destinationColumn, destinationRow)){
                 newPieceBoard[currentColumn][currentRow]= '';
@@ -86,24 +88,39 @@ function Board() {
                 if(colorTurn=='w') setColorTurn('b');
                 if(colorTurn=='b') setColorTurn('w');
             }
+            else{
+                newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
+                setPieceBoard(newPieceBoard);        
+                return false;
+            }
+        }
+        else{
+            newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
+            setPieceBoard(newPieceBoard);    
+            return false;
         }
 
-        //update piece board
-        const pieceArray = Object.entries(newPieceBoard);
+        newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
+        setPieceBoard(newPieceBoard);
+    }
+
+    function removeActiveColorFromBoard(newPieceBoard: string[][]){
+        const pieceBoardArrayFromObject = Object.entries(newPieceBoard);
+        const pieceArray = pieceBoardArrayFromObject.map((item) => item[1]);
         
         const newPieceArray = [];
-        for (const [rowindex, rowArray] of pieceArray){
+        for (const rowArray of pieceArray){
             const newRow = [];
+
             for(let row of rowArray){
                 row = row.replace("a","");
-                console.log(row);
                 newRow.push(row)
             }
             newPieceArray.push(newRow);
         }
         newPieceBoard = {...newPieceArray};
 
-        setPieceBoard(newPieceBoard);
+        return newPieceBoard;
     }
 
     function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
