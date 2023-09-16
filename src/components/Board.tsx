@@ -135,8 +135,35 @@ function Board() {
                     newPieceBoard[currentColumn+1][currentRow-1]+='a';
                 }
             }
+        }
 
-            
+        //knight
+        if(active.name[1]=='n'){
+            if(currentColumn>=2 && currentRow<=6){
+                newPieceBoard[currentColumn-2][currentRow+1]+='a';
+            }
+            if(currentColumn>=2 && currentRow>=1){
+                newPieceBoard[currentColumn-2][currentRow-1]+='a';
+            }
+            if(currentColumn<=5 && currentRow<=6){
+                newPieceBoard[currentColumn+2][currentRow+1]+='a';
+            }
+            if(currentColumn<=5 && currentRow>=1){
+                newPieceBoard[currentColumn+2][currentRow-1]+='a';
+            }
+
+            if(currentColumn>=1 && currentRow<=5){
+                newPieceBoard[currentColumn-1][currentRow+2]+='a';
+            }
+            if(currentColumn>=1 && currentRow>=2){
+                newPieceBoard[currentColumn-1][currentRow-2]+='a';
+            }
+            if(currentColumn<=6 && currentRow<=6){
+                newPieceBoard[currentColumn+1][currentRow+2]+='a';
+            }
+            if(currentColumn<=6 && currentRow>=1){
+                newPieceBoard[currentColumn+1][currentRow-2]+='a';
+            }
         }
 
         setPieceBoard(newPieceBoard);

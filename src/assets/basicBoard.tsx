@@ -10,7 +10,7 @@ const basicBoard = [
 ]
 
 const startingPieceBoard = [
-    [ 'br', 'bn', 'bb','bq','bk','bb','bb','br'],
+    [ 'br', 'bn', 'bb','bq','bk','bb','bn','br'],
     [ 'bp', 'bp', 'bp','bp','bp','bp','bp','bp'],
     [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
     [ '' , '' , '' ,'' ,'' ,'' ,'' ,''],
