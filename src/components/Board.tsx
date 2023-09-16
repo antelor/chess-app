@@ -59,6 +59,19 @@ function Board() {
             }
         }
 
+        //rook
+        if(active.name[1]=='r'){
+            for(let i = 0; i < 8; i++){
+                if(i!==currentRow){
+                    newPieceBoard[currentColumn][i]+='a';
+                }
+                if(i!==currentColumn){
+                    newPieceBoard[i][currentRow]+='a';
+                }
+            }
+
+        }
+
         setPieceBoard(newPieceBoard);
     }
     
@@ -71,22 +84,24 @@ function Board() {
         const currentRow = active.x;
 
         //check if the movement was made by the correct color according to turn
-        if(colorTurn!=active.name[0]) return;
-
+        if(colorTurn!=active.name[0]) return false;
 
         //destination square
         const {over} = event;
         
-        //if the piece was dragged over a square
+        //check if the piece was dragged over a square
         if(over){
             const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
-            //checks if its a valid movement
+
+            //check if its a valid movement
             if(checkMovement(active.name, currentColumn, currentRow, destinationColumn, destinationRow)){
                 newPieceBoard[currentColumn][currentRow]= '';
                 newPieceBoard[destinationColumn][destinationRow] = active.name;
-                //change turn
-                if(colorTurn=='w') setColorTurn('b');
-                if(colorTurn=='b') setColorTurn('w');
+                newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
+                setPieceBoard(newPieceBoard);
+                changeTurn();
+
+                return true;
             }
             else{
                 newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
@@ -99,9 +114,11 @@ function Board() {
             setPieceBoard(newPieceBoard);    
             return false;
         }
+    }
 
-        newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
-        setPieceBoard(newPieceBoard);
+    function changeTurn(){
+        if(colorTurn=='w') setColorTurn('b');
+        if(colorTurn=='b') setColorTurn('w');
     }
 
     function removeActiveColorFromBoard(newPieceBoard: string[][]){
