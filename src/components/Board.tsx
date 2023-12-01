@@ -21,6 +21,7 @@ function Board() {
         const currentColumn = active.y;
         const currentRow = active.x;
 
+        //check if the movement was made by the correct color according to turn
         if(active.name[0]!=colorTurn) return;
 
         //change pieceboard to one where the possible movements have a certain character (a)
@@ -69,14 +70,7 @@ function Board() {
 
         //rook
         if(active.name[1]=='r'){
-            for(let i = 0; i < 8; i++){
-                if(i!==currentRow){
-                    newPieceBoard[currentColumn][i]+='a';
-                }
-                if(i!==currentColumn){
-                    newPieceBoard[i][currentRow]+='a';
-                }
-            }
+            console.log('to-do')
         }
 
         //queen
@@ -147,29 +141,30 @@ function Board() {
 
         //knight
         if(active.name[1]=='n'){
-            if(currentColumn>=2 && currentRow<=6){
+            //if the space exists and it's not occupied by a friendly piece, it's active
+            if(currentColumn>=2 && currentRow<=6 && newPieceBoard[currentColumn-2][currentRow+1][0]!=active.name[0]){
                 newPieceBoard[currentColumn-2][currentRow+1]+='a';
             }
-            if(currentColumn>=2 && currentRow>=1){
+            if(currentColumn>=2 && currentRow>=1 && newPieceBoard[currentColumn-2][currentRow-1][0]!=active.name[0]){
                 newPieceBoard[currentColumn-2][currentRow-1]+='a';
             }
-            if(currentColumn<=5 && currentRow<=6){
+            if(currentColumn<=5 && currentRow<=6 && newPieceBoard[currentColumn+2][currentRow+1][0]!=active.name[0]){
                 newPieceBoard[currentColumn+2][currentRow+1]+='a';
             }
-            if(currentColumn<=5 && currentRow>=1){
+            if(currentColumn<=5 && currentRow>=1 && newPieceBoard[currentColumn+2][currentRow-1][0]!=active.name[0]){
                 newPieceBoard[currentColumn+2][currentRow-1]+='a';
             }
 
-            if(currentColumn>=1 && currentRow<=5){
+            if(currentColumn>=1 && currentRow<=5 && newPieceBoard[currentColumn-1][currentRow+2][0]!=active.name[0]){
                 newPieceBoard[currentColumn-1][currentRow+2]+='a';
             }
-            if(currentColumn>=1 && currentRow>=2){
+            if(currentColumn>=1 && currentRow>=2 && newPieceBoard[currentColumn-1][currentRow-2][0]!=active.name[0]){
                 newPieceBoard[currentColumn-1][currentRow-2]+='a';
             }
-            if(currentColumn<=6 && currentRow<=6){
+            if(currentColumn<=6 && currentRow<=6 && newPieceBoard[currentColumn+1][currentRow+2][0]!=active.name[0]){
                 newPieceBoard[currentColumn+1][currentRow+2]+='a';
             }
-            if(currentColumn<=6 && currentRow>=1){
+            if(currentColumn<=6 && currentRow>=2 && newPieceBoard[currentColumn+1][currentRow-2][0]!=active.name[0]){
                 newPieceBoard[currentColumn+1][currentRow-2]+='a';
             }
         }
