@@ -417,7 +417,7 @@ function Board() {
             const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
 
             //check if its a valid movement
-            if(checkMovement(active.name, currentColumn, currentRow, destinationColumn, destinationRow)){
+            if(checkMovement(active.name, destinationColumn, destinationRow)){
                 newPieceBoard[currentColumn][currentRow]= '';
                 newPieceBoard[destinationColumn][destinationRow] = active.name;
                 newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
@@ -465,9 +465,8 @@ function Board() {
         return newPieceBoard;
     }
 
-    function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
+    function checkMovement(pieceName: string, destinationColumn: number, destinationRow: number){
         const color = pieceName[0];
-        const piece = pieceName[1];
         const destinationSquare = pieceBoard[destinationColumn][destinationRow];
 
         //if there is a piece in the destination square
@@ -476,41 +475,7 @@ function Board() {
             if (destinationSquare[0]==color) return false;
         }
 
-        //pawn
-        /*if(piece=='p'){
-            //if the movement is to trade a piece
-            if(destinationSquare && destinationSquare!='a'){
-                if(destinationRow!=currentRow && Math.abs(destinationColumn-currentColumn)==1 && Math.abs(destinationRow-currentRow)==1){
-                    if(color=='w'){
-                        if (destinationColumn < currentColumn ) return true;
-                        else return false;
-                    }
-                    
-                    if(color[0]=='b'){
-                        if (destinationColumn > currentColumn) return true;
-                        else return false;
-                    }
-                }
-                
-            }
-            //if there is no piece, don't allow diagonal movement
-            else{
-                if(destinationRow==currentRow && Math.abs(destinationColumn-currentColumn)==1){
-                    if(color=='w'){
-                        if (destinationColumn < currentColumn ) return true;
-                        else return false;
-                    }
-        
-                    if(color[0]=='b'){
-                        if (destinationColumn > currentColumn) return true;
-                        else return false;
-                    }
-                }
-            }
-            return;
-        }*/
-
-        //all other pieces
+        //all square is active, movement is allowed
         if(destinationSquare.includes('a')) return true;
         else return false;
     }
