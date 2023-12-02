@@ -45,7 +45,7 @@ function Board() {
                 newPieceBoard[currentColumn-1][currentRow]+='a';
             }
             //if it's first turn, 2 spaces
-            if(turnNumber===0){
+            if(currentColumn===6){
                 newPieceBoard[currentColumn-2][currentRow]+='a';
             }
 
