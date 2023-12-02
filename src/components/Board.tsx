@@ -216,7 +216,6 @@ function Board() {
             }
 
             //horizontal and vertical:
-            //ESTA CHEQUENDO DESDE EL INDICE 0, DEBERIA HACER COMO ROOK Y REVISAR DESDE CASILLERO ACTUAL
             //down
             for(let j = currentColumn+1; j <= 7; j++){
                 if (newPieceBoard[j][currentRow].includes(activeColor)) break;
@@ -293,34 +292,34 @@ function Board() {
         //king
         if(activePiece=='k'){
             if(currentColumn==0){
-                newPieceBoard[currentColumn+1][currentRow+1]+='a';
-                newPieceBoard[currentColumn][currentRow+1]+='a';
-                newPieceBoard[currentColumn+1][currentRow]+='a';
-                if(currentRow!=0){
-                    newPieceBoard[currentColumn][currentRow-1]+='a';
-                    newPieceBoard[currentColumn+1][currentRow-1]+='a';
-                }
+                    if(!newPieceBoard[currentColumn+1][currentRow+1].includes(activeColor)) newPieceBoard[currentColumn+1][currentRow+1]+='a';
+                    if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor)) newPieceBoard[currentColumn][currentRow+1]+='a';
+                    if(!newPieceBoard[currentColumn+1][currentRow].includes(activeColor))newPieceBoard[currentColumn+1][currentRow]+='a';
+                    if(currentRow!=0){
+                        if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor)) newPieceBoard[currentColumn][currentRow-1]+='a';
+                        if(!newPieceBoard[currentColumn+1][currentRow-1].includes(activeColor)) newPieceBoard[currentColumn+1][currentRow-1]+='a';
+                    }
             }
             else if(currentColumn==7){
-                newPieceBoard[currentColumn-1][currentRow-1]+='a';
-                newPieceBoard[currentColumn-1][currentRow]+='a';
-                newPieceBoard[currentColumn][currentRow-1]+='a';
+                if(!newPieceBoard[currentColumn-1][currentRow-1].includes(activeColor)) newPieceBoard[currentColumn-1][currentRow-1]+='a';
+                if(!newPieceBoard[currentColumn-1][currentRow].includes(activeColor)) newPieceBoard[currentColumn-1][currentRow]+='a';
+                if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor)) newPieceBoard[currentColumn][currentRow-1]+='a';
                 
                 if(currentRow!=7){
-                    newPieceBoard[currentColumn-1][currentRow+1]+='a';
-                    newPieceBoard[currentColumn][currentRow+1]+='a';
+                    if(!newPieceBoard[currentColumn-1][currentRow+1].includes(activeColor)) newPieceBoard[currentColumn-1][currentRow+1]+='a';
+                    if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor)) newPieceBoard[currentColumn][currentRow+1]+='a';
                 }
             }
             else{
-                newPieceBoard[currentColumn][currentRow+1]+='a';
-                newPieceBoard[currentColumn+1][currentRow+1]+='a';
-                newPieceBoard[currentColumn+1][currentRow]+='a';
-                newPieceBoard[currentColumn-1][currentRow+1]+='a';
-                newPieceBoard[currentColumn-1][currentRow]+='a';
+                if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor)) newPieceBoard[currentColumn][currentRow+1]+='a';
+                if(!newPieceBoard[currentColumn+1][currentRow+1].includes(activeColor)) newPieceBoard[currentColumn+1][currentRow+1]+='a';
+                if(!newPieceBoard[currentColumn+1][currentRow].includes(activeColor)) newPieceBoard[currentColumn+1][currentRow]+='a';
+                if(!newPieceBoard[currentColumn-1][currentRow+1].includes(activeColor)) newPieceBoard[currentColumn-1][currentRow+1]+='a';
+                if(!newPieceBoard[currentColumn-1][currentRow].includes(activeColor)) newPieceBoard[currentColumn-1][currentRow]+='a';
                 if(currentRow!=0){
-                    newPieceBoard[currentColumn-1][currentRow-1]+='a';
-                    newPieceBoard[currentColumn][currentRow-1]+='a';
-                    newPieceBoard[currentColumn+1][currentRow-1]+='a';
+                    if(!newPieceBoard[currentColumn-1][currentRow-1].includes(activeColor)) newPieceBoard[currentColumn-1][currentRow-1]+='a';
+                    if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor)) newPieceBoard[currentColumn][currentRow-1]+='a';
+                    if(!newPieceBoard[currentColumn+1][currentRow-1].includes(activeColor)) newPieceBoard[currentColumn+1][currentRow-1]+='a';
                 }
             }
         }
