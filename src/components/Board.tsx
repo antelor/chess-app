@@ -12,6 +12,7 @@ function Board() {
     //board with every piece location info
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
     const [colorTurn, setColorTurn] = useState('w');
+    const [turnNumber, setTurnNumber] = useState(0);
 
     function handleDragStart(event: any){
         const newPieceBoard = {...pieceBoard};
@@ -33,11 +34,50 @@ function Board() {
         //pawn
         const upSpace = (currentColumn >= 1 ? newPieceBoard[currentColumn-1][currentRow]: undefined);
         const downSpace = (currentColumn <= 6 ? newPieceBoard[currentColumn+1][currentRow] : undefined);
-        if(activeColor=='w' && activePiece=='p' && upSpace!=undefined){
-            newPieceBoard[currentColumn-1][currentRow]+='a';
+        const upLeftSpace = (currentColumn >=1 && currentRow>=1 ? newPieceBoard[currentColumn-1][currentRow-1] : undefined);
+        const upRightSpace = (currentColumn >=1 && currentRow<=6 ? newPieceBoard[currentColumn-1][currentRow+1] : undefined);
+        const downLeftSpace = (currentColumn <= 6 && currentRow<=6 ? newPieceBoard[currentColumn+1][currentRow-1] : undefined);
+        const downRightSpace = (currentColumn <= 6 && currentRow<=6 ? newPieceBoard[currentColumn+1][currentRow+1] : undefined);
+
+        if(activeColor=='w' && activePiece=='p'){
+            //if up is empty, color it in
+            if(upSpace!=undefined && upSpace===''){
+                newPieceBoard[currentColumn-1][currentRow]+='a';
+            }
+            //if it's first turn, 2 spaces
+            if(turnNumber===0){
+                newPieceBoard[currentColumn-2][currentRow]+='a';
+            }
+
+            //if the upLeftSpace contains enemy piece, color it in
+            if(upLeftSpace!=undefined && upLeftSpace[0]!=activeColor && upLeftSpace!=''){
+                newPieceBoard[currentColumn-1][currentRow-1]+='a';
+            }
+
+            //if the upRightSpace contains enemy piece, color it in
+            if(upRightSpace!=undefined && upRightSpace[0]!=activeColor && upRightSpace!=''){
+                newPieceBoard[currentColumn-1][currentRow+1]+='a';
+            }
         }        
-        if(activeColor=='b' && activePiece=='p' && downSpace!=undefined){
-            newPieceBoard[currentColumn+1][currentRow]+='a';
+        if(activeColor=='b' && activePiece=='p'){
+            //if down is empty, color it in
+            if(downSpace!=undefined && downSpace===''){
+                newPieceBoard[currentColumn+1][currentRow]+='a';
+            }
+            //if it's first turn, 2 spaces
+            if(turnNumber===1){
+                newPieceBoard[currentColumn+2][currentRow]+='a';
+            }
+
+            //if the downLeftSpace contains enemy piece, color it in
+            if(downLeftSpace!=undefined && downLeftSpace[0]!=activeColor && downLeftSpace!=''){
+                newPieceBoard[currentColumn+1][currentRow-1]+='a';
+            }
+
+            //if the downRightSpace contains enemy piece, color it in
+            if(downRightSpace!=undefined && downRightSpace[0]!=activeColor && downRightSpace!=''){
+                newPieceBoard[currentColumn+1][currentRow+1]+='a';
+            }
         }
         
         //bishop
@@ -402,6 +442,8 @@ function Board() {
     function changeTurn(){
         if(colorTurn=='w') setColorTurn('b');
         if(colorTurn=='b') setColorTurn('w');
+        const newTurnNumber=turnNumber+1;
+        setTurnNumber(newTurnNumber);
     }
 
     function removeActiveColorFromBoard(newPieceBoard: string[][]){
@@ -426,18 +468,18 @@ function Board() {
     function checkMovement(pieceName: string, currentColumn: number, currentRow: number, destinationColumn: number, destinationRow: number){
         const color = pieceName[0];
         const piece = pieceName[1];
-        const pieceInDestinationSquare = pieceBoard[destinationColumn][destinationRow];
+        const destinationSquare = pieceBoard[destinationColumn][destinationRow];
 
         //if there is a piece in the destination square
-        if(pieceInDestinationSquare){
+        if(destinationSquare){
             //if the destination piece is the same color, don't allow movement
-            if (pieceInDestinationSquare[0]==color) return false;
+            if (destinationSquare[0]==color) return false;
         }
 
         //pawn
-        if(piece=='p'){
+        /*if(piece=='p'){
             //if the movement is to trade a piece
-            if(pieceInDestinationSquare && pieceInDestinationSquare!='a'){
+            if(destinationSquare && destinationSquare!='a'){
                 if(destinationRow!=currentRow && Math.abs(destinationColumn-currentColumn)==1 && Math.abs(destinationRow-currentRow)==1){
                     if(color=='w'){
                         if (destinationColumn < currentColumn ) return true;
@@ -465,54 +507,12 @@ function Board() {
                     }
                 }
             }
-        }
+            return;
+        }*/
 
-        //rook
-        if(piece=='r'){
-            if( (destinationColumn!=currentColumn) && (destinationRow==currentRow) ) return true;
-            if( (destinationColumn==currentColumn) && (destinationRow!=currentRow) ) return true;
-            else return false;
-        }
-
-        //bishop
-        if(piece=='b'){
-            if( (destinationColumn!=currentColumn) && (destinationRow!=currentRow) ){
-                if( Math.abs(destinationColumn-currentColumn) == Math.abs(destinationRow-currentRow)){
-                    return true;
-                }
-            } 
-            else return false;
-        }
-
-        //queen
-        if(piece=='q'){
-            if( (destinationColumn!=currentColumn) && (destinationRow==currentRow) ) return true;
-            if( (destinationColumn==currentColumn) && (destinationRow!=currentRow) ) return true;
-            if( (destinationColumn!=currentColumn) && (destinationRow!=currentRow) ){
-                if( Math.abs(destinationColumn-currentColumn) == Math.abs(destinationRow-currentRow)){
-                    return true;
-                }
-            } 
-            else return false;
-        }
-
-        //king
-        if(piece=='k'){
-            if( Math.abs(destinationColumn-currentColumn)==1 && Math.abs(destinationRow-currentRow)==1) return true;
-            else return false;
-        }
-
-        //knight
-        if(piece=='n'){
-            if(Math.abs(destinationRow-currentRow)==2){
-                if(Math.abs(destinationColumn-currentColumn)==1) return true
-                else return false;
-            }
-            if(Math.abs(destinationColumn-currentColumn)==2){
-                if(Math.abs(destinationRow-currentRow)==1) return true
-                else return false;
-            }
-        }
+        //all other pieces
+        if(destinationSquare.includes('a')) return true;
+        else return false;
     }
 
     function checkPieceInSquare(square: string){
