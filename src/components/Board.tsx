@@ -148,29 +148,145 @@ function Board() {
             //diagonals:
             //up right side movement
             for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
+                if (newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
             }
             //up left side movement
             for(let j = currentColumn-1, i = currentRow-1; j >= 0 && i >= 0; j--, i--){
+                if (newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
             }
             //down right side movement
             for(let j = currentColumn+1, i = currentRow+1; j < 8 && i < 8; j++, i++){
+                if (newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
             }
             //down left side movement
             for(let j = currentColumn+1, i = currentRow-1; j < 8 && i >= 0; j++, i--){
+                if (newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
             }
 
             //horizontal and vertical:
-            for(let i = 0; i < 8; i++){
-                if(i!==currentRow){
-                    newPieceBoard[currentColumn][i]+='a';
+            //ESTA CHEQUENDO DESDE EL INDICE 0, DEBERIA HACER COMO ROOK Y REVISAR DESDE CASILLERO ACTUAL
+            //down
+            for(let j = currentColumn+1; j <= 7; j++){
+                if (newPieceBoard[j][currentRow].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][currentRow][0]==='b'){
+                        newPieceBoard[j][currentRow]+='a';
+                        break;
+                    }
                 }
-                if(i!==currentColumn){
-                    newPieceBoard[i][currentRow]+='a';
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][currentRow][0]==='w'){
+                        newPieceBoard[j][currentRow]+='a';
+                        break;
+                    }
                 }
+                newPieceBoard[j][currentRow]+='a';
+            }
+
+            //up
+            for(let j = currentColumn-1; j >= 0; j--){
+                if (newPieceBoard[j][currentRow].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][currentRow][0]==='b'){
+                        newPieceBoard[j][currentRow]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][currentRow][0]==='w'){
+                        newPieceBoard[j][currentRow]+='a';
+                        break;
+                    }
+                }
+                newPieceBoard[j][currentRow]+='a';
+            }
+
+            //right
+            for(let i = currentRow+1; i <= 7; i++){
+                if (newPieceBoard[currentColumn][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[currentColumn][i][0]==='b'){
+                        newPieceBoard[currentColumn][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[currentColumn][i][0]==='w'){
+                        newPieceBoard[currentColumn][i]+='a';
+                        break;
+                    }
+                }
+                newPieceBoard[currentColumn][i]+='a';
+            }
+
+            //left
+            for(let i = currentRow-1; i >= 0; i--){
+                if (newPieceBoard[currentColumn][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[currentColumn][i][0]==='b'){
+                        newPieceBoard[currentColumn][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[currentColumn][i][0]==='w'){
+                        newPieceBoard[currentColumn][i]+='a';
+                        break;
+                    }
+                }
+                newPieceBoard[currentColumn][i]+='a';
             }
         }
         
