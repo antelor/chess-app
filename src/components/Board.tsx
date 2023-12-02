@@ -386,7 +386,7 @@ function Board() {
             if(currentColumn>=1 && currentRow>=2 && newPieceBoard[currentColumn-1][currentRow-2][0]!=activeColor){
                 newPieceBoard[currentColumn-1][currentRow-2]+='a';
             }
-            if(currentColumn<=6 && currentRow<=6 && newPieceBoard[currentColumn+1][currentRow+2][0]!=activeColor){
+            if(currentColumn<=6 && currentRow<=5 && newPieceBoard[currentColumn+1][currentRow+2][0]!=activeColor){
                 newPieceBoard[currentColumn+1][currentRow+2]+='a';
             }
             if(currentColumn<=6 && currentRow>=2 && newPieceBoard[currentColumn+1][currentRow-2][0]!=activeColor){
