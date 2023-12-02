@@ -65,7 +65,7 @@ function Board() {
                 newPieceBoard[currentColumn+1][currentRow]+='a';
             }
             //if it's first turn, 2 spaces
-            if(turnNumber===1){
+            if(currentColumn===1){
                 newPieceBoard[currentColumn+2][currentRow]+='a';
             }
 
@@ -118,14 +118,17 @@ function Board() {
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
                 if(activeColor==='b'){
+                    console.log('a')
                     if(newPieceBoard[j][i][0]==='w'){
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
-                else newPieceBoard[j][i]+='a';
+                
             }
 
             //left side check
@@ -136,14 +139,15 @@ function Board() {
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
                 if(activeColor==='b'){
                     if(newPieceBoard[j][i][0]==='w'){
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
-                else newPieceBoard[j][i]+='a';
             }
 
             //top check
@@ -154,14 +158,15 @@ function Board() {
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
                 if(activeColor==='b'){
                     if(newPieceBoard[j][i][0]==='w'){
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
-                else newPieceBoard[j][i]+='a';
             }
 
             //down check
@@ -172,14 +177,15 @@ function Board() {
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
                 if(activeColor==='b'){
                     if(newPieceBoard[j][i][0]==='w'){
                         newPieceBoard[j][i]+='a';
                         break;
                     }
+                    else newPieceBoard[j][i]+='a';
                 }
-                else newPieceBoard[j][i]+='a';
             }
         }
 
