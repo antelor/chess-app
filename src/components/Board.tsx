@@ -20,61 +20,131 @@ function Board() {
         const active = event.active.data.current;
         const currentColumn = active.y;
         const currentRow = active.x;
+        const activeColor = active.name[0];
+        const activePiece = active.name[1];
 
+        
         //check if the movement was made by the correct color according to turn
-        if(active.name[0]!=colorTurn) return;
-
+        if(activeColor!=colorTurn) return;
+        
         //change pieceboard to one where the possible movements have a certain character (a)
         //then on drag end remove the character before starting
         
         //pawn
-        if(active.name[0]=='w'){
-            if(active.name[1]=='p'){
-                newPieceBoard[currentColumn-1][currentRow]+='a';
-            }
-
+        const upSpace = (currentColumn >= 1 ? newPieceBoard[currentColumn-1][currentRow]: undefined);
+        const downSpace = (currentColumn <= 6 ? newPieceBoard[currentColumn+1][currentRow] : undefined);
+        if(activeColor=='w' && activePiece=='p' && upSpace!=undefined){
+            newPieceBoard[currentColumn-1][currentRow]+='a';
         }        
-        if(active.name[0]=='b'){
-            if(active.name[1]=='p'){
-                newPieceBoard[currentColumn+1][currentRow]+='a';
-            }
+        if(activeColor=='b' && activePiece=='p' && downSpace!=undefined){
+            newPieceBoard[currentColumn+1][currentRow]+='a';
         }
         
         //bishop
-        if(active.name[1]=='b'){
+        if(activePiece=='b'){
             //up right side movement
             for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==activeColor) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=activeColor) break;
             }
             //up left side movement
             for(let j = currentColumn-1, i = currentRow-1; j >= 0 && i >= 0; j--, i--){
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==activeColor) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=activeColor) break;
             }
             //down right side movement
             for(let j = currentColumn+1, i = currentRow+1; j < 8 && i < 8; j++, i++){
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==activeColor) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=activeColor) break;
             }
             //down left side movement
             for(let j = currentColumn+1, i = currentRow-1; j < 8 && i >= 0; j++, i--){
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==activeColor) break;
                 if(!newPieceBoard[j][i].includes('a')) newPieceBoard[j][i]+='a';
-                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=active.name[0]) break;
+                if(newPieceBoard[j][i]!='a' && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]!=activeColor) break;
             }
         }
 
         //rook
-        if(active.name[1]=='r'){
-            console.log('to-do')
+        if(activePiece=='r'){
+            //right side check
+            for(let j = currentColumn, i = currentRow+1; i <=7; i++){
+                if(newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                else newPieceBoard[j][i]+='a';
+            }
+
+            //left side check
+            for(let j = currentColumn, i = currentRow-1; i >=0; i--){
+                if(newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                else newPieceBoard[j][i]+='a';
+            }
+
+            //top check
+            for(let j = currentColumn-1, i = currentRow; j >=0; j--){
+                if(newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                else newPieceBoard[j][i]+='a';
+            }
+
+            //down check
+            for(let j = currentColumn+1, i = currentRow; j <=7; j++){
+                if(newPieceBoard[j][i].includes(activeColor)) break;
+                if(activeColor==='w'){
+                    if(newPieceBoard[j][i][0]==='b'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                if(activeColor==='b'){
+                    if(newPieceBoard[j][i][0]==='w'){
+                        newPieceBoard[j][i]+='a';
+                        break;
+                    }
+                }
+                else newPieceBoard[j][i]+='a';
+            }
         }
 
         //queen
-        if(active.name[1]=='q'){
+        if(activePiece=='q'){
             //diagonals:
             //up right side movement
             for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
@@ -105,7 +175,7 @@ function Board() {
         }
         
         //king
-        if(active.name[1]=='k'){
+        if(activePiece=='k'){
             if(currentColumn==0){
                 newPieceBoard[currentColumn+1][currentRow+1]+='a';
                 newPieceBoard[currentColumn][currentRow+1]+='a';
@@ -140,31 +210,31 @@ function Board() {
         }
 
         //knight
-        if(active.name[1]=='n'){
+        if(activePiece=='n'){
             //if the space exists and it's not occupied by a friendly piece, it's active
-            if(currentColumn>=2 && currentRow<=6 && newPieceBoard[currentColumn-2][currentRow+1][0]!=active.name[0]){
+            if(currentColumn>=2 && currentRow<=6 && newPieceBoard[currentColumn-2][currentRow+1][0]!=activeColor){
                 newPieceBoard[currentColumn-2][currentRow+1]+='a';
             }
-            if(currentColumn>=2 && currentRow>=1 && newPieceBoard[currentColumn-2][currentRow-1][0]!=active.name[0]){
+            if(currentColumn>=2 && currentRow>=1 && newPieceBoard[currentColumn-2][currentRow-1][0]!=activeColor){
                 newPieceBoard[currentColumn-2][currentRow-1]+='a';
             }
-            if(currentColumn<=5 && currentRow<=6 && newPieceBoard[currentColumn+2][currentRow+1][0]!=active.name[0]){
+            if(currentColumn<=5 && currentRow<=6 && newPieceBoard[currentColumn+2][currentRow+1][0]!=activeColor){
                 newPieceBoard[currentColumn+2][currentRow+1]+='a';
             }
-            if(currentColumn<=5 && currentRow>=1 && newPieceBoard[currentColumn+2][currentRow-1][0]!=active.name[0]){
+            if(currentColumn<=5 && currentRow>=1 && newPieceBoard[currentColumn+2][currentRow-1][0]!=activeColor){
                 newPieceBoard[currentColumn+2][currentRow-1]+='a';
             }
 
-            if(currentColumn>=1 && currentRow<=5 && newPieceBoard[currentColumn-1][currentRow+2][0]!=active.name[0]){
+            if(currentColumn>=1 && currentRow<=5 && newPieceBoard[currentColumn-1][currentRow+2][0]!=activeColor){
                 newPieceBoard[currentColumn-1][currentRow+2]+='a';
             }
-            if(currentColumn>=1 && currentRow>=2 && newPieceBoard[currentColumn-1][currentRow-2][0]!=active.name[0]){
+            if(currentColumn>=1 && currentRow>=2 && newPieceBoard[currentColumn-1][currentRow-2][0]!=activeColor){
                 newPieceBoard[currentColumn-1][currentRow-2]+='a';
             }
-            if(currentColumn<=6 && currentRow<=6 && newPieceBoard[currentColumn+1][currentRow+2][0]!=active.name[0]){
+            if(currentColumn<=6 && currentRow<=6 && newPieceBoard[currentColumn+1][currentRow+2][0]!=activeColor){
                 newPieceBoard[currentColumn+1][currentRow+2]+='a';
             }
-            if(currentColumn<=6 && currentRow>=2 && newPieceBoard[currentColumn+1][currentRow-2][0]!=active.name[0]){
+            if(currentColumn<=6 && currentRow>=2 && newPieceBoard[currentColumn+1][currentRow-2][0]!=activeColor){
                 newPieceBoard[currentColumn+1][currentRow-2]+='a';
             }
         }
@@ -179,9 +249,10 @@ function Board() {
         const active = event.active.data.current
         const currentColumn = active.y;
         const currentRow = active.x;
+        const activeColor = active.name[0];
 
         //check if the movement was made by the correct color according to turn
-        if(colorTurn!=active.name[0]) return false;
+        if(colorTurn!=activeColor) return false;
 
         //destination square
         const {over} = event;
