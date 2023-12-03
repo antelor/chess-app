@@ -35,6 +35,9 @@ function switchCheck(newPieceBoard: string[][], currentColumn: number, currentRo
 //change pieceboard to one where the possible movements have a certain character (a)
 //then on drag end remove the character before starting
 
+//to-do: don't allow movement to squares you can be eaten
+//? add 'b' to squares where you can be eaten
+
 function pawnCheck(newPieceBoard: string[][], currentColumn: number, currentRow: number, activeColor: string, activePiece: string){
     //pawn
     const upSpace = (currentColumn >= 1 ? newPieceBoard[currentColumn-1][currentRow]: undefined);
@@ -205,6 +208,7 @@ function rookCheck(newPieceBoard: string[][], currentColumn: number, currentRow:
     return newPieceBoard;
 }
 
+//to-do: castling
 function queenCheck(newPieceBoard: string[][], currentColumn: number, currentRow: number, activeColor: string, activePiece: string){
     //queen
     if(activePiece=='q'){
