@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {useState} from 'react';
 import Piece from './Piece';
@@ -52,6 +51,9 @@ function Board() {
         if(over){
             const [destinationRow, destinationColumn] = getCoordinatesFromSquareName(over.id)
             
+            ////castling
+            newPieceBoard = checkCastling(pieceBoard, activeColor, destinationColumn, destinationRow, )
+
             //check if its a valid movement
             if(checkMovement(active.name, destinationColumn, destinationRow)){
                 newPieceBoard[currentColumn][currentRow]= '';
@@ -88,6 +90,41 @@ function Board() {
         //all square is active, movement is allowed
         if(destinationSquare.includes('a')) return true;
         else return false;
+    }
+
+    function checkCastling(pieceBoard: string[][], activeColor: string, destinationColumn: number, destinationRow: number){
+        const newPieceBoard = {...pieceBoard};
+        //white left side castling
+        if(activeColor==='w' && destinationColumn===7 && destinationRow===0 && pieceBoard[7][3]==='wq' && pieceBoard[7][0]==='wr' && pieceBoard[7][1]==='a' && pieceBoard[7][2]==='a'){
+            newPieceBoard[7][3]='';
+            newPieceBoard[7][0]='';
+            newPieceBoard[7][1]='wq';
+            newPieceBoard[7][2]='wr';
+        }
+        //white right side castling
+        if(activeColor==='w' && destinationColumn===7 && destinationRow===7 && pieceBoard[7][3]==='wq' && pieceBoard[7][7]==='wr' && pieceBoard[7][5]==='a' && pieceBoard[7][6]==='a' && pieceBoard[7][4]==='a'){
+            newPieceBoard[7][3]='';
+            newPieceBoard[7][7]='';
+            newPieceBoard[7][6]='wq';
+            newPieceBoard[7][5]='wr';
+        }
+
+        //black left side castling
+        if(activeColor==='b' && destinationColumn===0 && destinationRow===0 && pieceBoard[0][3]==='bq' && pieceBoard[0][0]==='br' && pieceBoard[0][1]==='a' && pieceBoard[0][2]==='a'){
+            newPieceBoard[0][3]='';
+            newPieceBoard[0][0]='';
+            newPieceBoard[0][1]='bq';
+            newPieceBoard[0][2]='br';
+        }
+        //black right side castling
+        if(activeColor==='b' && destinationColumn===0 && destinationRow===7 && pieceBoard[0][3]==='bq' && pieceBoard[0][7]==='br' && pieceBoard[0][5]==='a' && pieceBoard[0][6]==='a' && pieceBoard[0][4]==='a'){
+            newPieceBoard[0][3]='';
+            newPieceBoard[0][7]='';
+            newPieceBoard[0][6]='bq';
+            newPieceBoard[0][5]='br';
+        }
+
+        return newPieceBoard;
     }
     
     function changeTurn(){
