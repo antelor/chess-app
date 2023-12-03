@@ -97,6 +97,7 @@ function Board() {
         setTurnNumber(newTurnNumber);
     }
 
+    //removes all 'a's from the board
     function removeActiveColorFromBoard(newPieceBoard: string[][]){
         const pieceBoardArrayFromObject = Object.entries(newPieceBoard);
         const pieceArray = pieceBoardArrayFromObject.map((item) => item[1]);
