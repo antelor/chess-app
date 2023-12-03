@@ -199,7 +199,6 @@ function rookCheck(newPieceBoard: string[][], currentColumn: number, currentRow:
     return newPieceBoard;
 }
 
-//to-do: castling
 function queenCheck(newPieceBoard: string[][], currentColumn: number, currentRow: number, activeColor: string){
     //diagonals:
     //up right side movement
