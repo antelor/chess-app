@@ -27,7 +27,7 @@ function Board() {
         //check if the movement was made by the correct color according to turn
         if(activeColor!=colorTurn) return;
 
-        newPieceBoard = switchCheck(newPieceBoard, currentColumn, currentRow, activeColor, activePiece)
+        newPieceBoard = switchCheck(newPieceBoard, currentColumn, currentRow, activeColor, activePiece, 'a');
 
         setPieceBoard(newPieceBoard);
     }
@@ -144,7 +144,7 @@ function Board() {
             const newRow = [];
 
             for(let row of rowArray){
-                row = row.replace("a","");
+                row = row.replace(/a/g,"");
                 newRow.push(row)
             }
             newPieceArray.push(newRow);
