@@ -463,7 +463,7 @@ function knightCheck(newPieceBoard: string[][], currentColumn: number, currentRo
     return newPieceBoard;
 }
 
-function mate(pieceBoard: string[][]): false | 'b' | 'w' {
+function mate(pieceBoard: string[][]): 'neither' | 'b' | 'w' {
     //clone board
     let auxBoard:string[][] = []
     for(let j=0; j<8; j++){
@@ -503,10 +503,7 @@ function mate(pieceBoard: string[][]): false | 'b' | 'w' {
 
 
     //if neither, not mate
-    return false;
-
-        
-    return false;
+    return 'neither';
 }
 
 

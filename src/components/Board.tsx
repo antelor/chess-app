@@ -14,7 +14,7 @@ function Board() {
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
     const [colorTurn, setColorTurn] = useState('w');
     const [turnNumber, setTurnNumber] = useState(0);
-    const [winState, setWinState] = useState(false);
+    const [mateState, setMateState] = useState('neither');
 
     function handleDragStart(event: any){
         let newPieceBoard = {...pieceBoard};
@@ -65,9 +65,9 @@ function Board() {
 
                 //check if mate
                 const mateStatus = mate(newPieceBoard);
-                console.log(mateStatus);
-                if(!mateStatus) {
-                    setWinState(mateStatus);
+                if(mateStatus!='neither') {
+                    console.log(mateStatus + ' did a mate');
+                    setMateState(mateStatus);
                 }
                 
                 changeTurn();
