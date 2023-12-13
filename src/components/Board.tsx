@@ -4,7 +4,8 @@ import Piece from './Piece';
 import Square from './Square';
 import '../styles/Board.scss';
 import {basicBoard, startingPieceBoard} from '../assets/basicBoard';
-import {switchCheck, checkmate} from './movementCheckFunctions';
+import {switchCheck, mate} from './movementCheckFunctions';
+import {removeActiveColorFromBoard} from './boardFunctions';
 
 import {DndContext} from '@dnd-kit/core';
 
@@ -13,7 +14,7 @@ function Board() {
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
     const [colorTurn, setColorTurn] = useState('w');
     const [turnNumber, setTurnNumber] = useState(0);
-    const [winState, setWinState] = useState('');
+    const [winState, setWinState] = useState(false);
 
     function handleDragStart(event: any){
         let newPieceBoard = {...pieceBoard};
@@ -62,11 +63,11 @@ function Board() {
                 newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
                 setPieceBoard(newPieceBoard);
 
-                //check if checkmate
-                if(checkmate(newPieceBoard, activeColor)) {
-                    setWinState('a');
-                    console.log(winState);
-                    console.log('checkmate');
+                //check if mate
+                const mateStatus = mate(newPieceBoard);
+                console.log(mateStatus);
+                if(!mateStatus) {
+                    setWinState(mateStatus);
                 }
                 
                 changeTurn();
@@ -142,26 +143,6 @@ function Board() {
         if(colorTurn=='b') setColorTurn('w');
         const newTurnNumber=turnNumber+1;
         setTurnNumber(newTurnNumber);
-    }
-
-    //removes all 'a's from the board
-    function removeActiveColorFromBoard(newPieceBoard: string[][]){
-        const pieceBoardArrayFromObject = Object.entries(newPieceBoard);
-        const pieceArray = pieceBoardArrayFromObject.map((item) => item[1]);
-        
-        const newPieceArray = [];
-        for (const rowArray of pieceArray){
-            const newRow = [];
-
-            for(let row of rowArray){
-                row = row.replace(/a/g,"");
-                newRow.push(row)
-            }
-            newPieceArray.push(newRow);
-        }
-        newPieceBoard = {...newPieceArray};
-
-        return newPieceBoard;
     }
 
     function checkPieceInSquare(square: string){

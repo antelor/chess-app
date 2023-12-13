@@ -1,3 +1,5 @@
+import { removeActiveColorFromBoard } from "./boardFunctions";
+
 function switchCheck(newPieceBoard: string[][], currentColumn: number, currentRow: number, activeColor: string, activePiece: string, state: string){
     switch(activePiece){
         case 'p':
@@ -18,7 +20,7 @@ function switchCheck(newPieceBoard: string[][], currentColumn: number, currentRo
 
         case 'k':
             //to prevent infinite checks
-            if(state==='a') newPieceBoard = kingCheck(newPieceBoard, currentColumn, currentRow, activeColor);
+            if(state==='a') newPieceBoard = kingCheck(newPieceBoard, currentColumn, currentRow, activeColor, 'c');
             break;
 
         case 'n':
@@ -350,18 +352,18 @@ function queenCheck(newPieceBoard: string[][], currentColumn: number, currentRow
 //? add 'c' *'check') to squares where you can be eaten
 //add letter variable to the checks, first add Cs then As
 
-function kingCheck(newPieceBoard: string[][], currentColumn: number, currentRow: number, activeColor: string){
+function kingCheck(newPieceBoard: string[][], currentColumn: number, currentRow: number, activeColor: string, state:string){
     //check all squares where opposing pieces can move and tag them with a 'c'
     if(activeColor==='w'){
         for(let j=0; j<8; j++){
             for(let i=0; i<8; i++){
                 if(newPieceBoard[j][i][0]==='b'){
-                    newPieceBoard = switchCheck(newPieceBoard, j, i, newPieceBoard[j][i][0], newPieceBoard[j][i][1], 'c');
+                    newPieceBoard = switchCheck(newPieceBoard, j, i, newPieceBoard[j][i][0], newPieceBoard[j][i][1], state);
                     //remove duplicate 'c's
                     for(let j=0; j<8; j++){
                         for(let i=0; i<8; i++){
-                            if(newPieceBoard[j][i][0]=='c') newPieceBoard[j][i]='c'
-                            if(newPieceBoard[j][i][2]=='c') newPieceBoard[j][i].substring(0,2);
+                            if(newPieceBoard[j][i][0]==state) newPieceBoard[j][i]=state
+                            if(newPieceBoard[j][i][2]==state) newPieceBoard[j][i].substring(0,2);
                         }
                     }
                 }
@@ -372,12 +374,12 @@ function kingCheck(newPieceBoard: string[][], currentColumn: number, currentRow:
         for(let j=0; j<8; j++){
             for(let i=0; i<8; i++){
                 if(newPieceBoard[j][i][0]==='w'){
-                    newPieceBoard = switchCheck(newPieceBoard, j, i, newPieceBoard[j][i][0], newPieceBoard[j][i][1], 'c');
+                    newPieceBoard = switchCheck(newPieceBoard, j, i, newPieceBoard[j][i][0], newPieceBoard[j][i][1], state);
                     //remove duplicate 'c's
                     for(let j=0; j<8; j++){
                         for(let i=0; i<8; i++){
-                            if(newPieceBoard[j][i][0]=='c') newPieceBoard[j][i]='c'
-                            if(newPieceBoard[j][i][2]=='c') newPieceBoard[j][i].substring(0,2)
+                            if(newPieceBoard[j][i][0]==state) newPieceBoard[j][i]=state
+                            if(newPieceBoard[j][i][2]==state) newPieceBoard[j][i].substring(0,2)
                         }
                     }
                 }
@@ -388,34 +390,34 @@ function kingCheck(newPieceBoard: string[][], currentColumn: number, currentRow:
     
     
     if(currentColumn==0){
-            if(!newPieceBoard[currentColumn+1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow+1].includes('c')) newPieceBoard[currentColumn+1][currentRow+1]+='a';
-            if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow+1].includes('c')) newPieceBoard[currentColumn][currentRow+1]+='a';
-            if(!newPieceBoard[currentColumn+1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow].includes('c'))newPieceBoard[currentColumn+1][currentRow]+='a';
+            if(!newPieceBoard[currentColumn+1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow+1].includes(state)) newPieceBoard[currentColumn+1][currentRow+1]+='a';
+            if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow+1].includes(state)) newPieceBoard[currentColumn][currentRow+1]+='a';
+            if(!newPieceBoard[currentColumn+1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow].includes(state))newPieceBoard[currentColumn+1][currentRow]+='a';
             if(currentRow!=0){
-                if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow-1].includes('c')) newPieceBoard[currentColumn][currentRow-1]+='a';
-                if(!newPieceBoard[currentColumn+1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow-1].includes('c')) newPieceBoard[currentColumn+1][currentRow-1]+='a';
+                if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow-1].includes(state)) newPieceBoard[currentColumn][currentRow-1]+='a';
+                if(!newPieceBoard[currentColumn+1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow-1].includes(state)) newPieceBoard[currentColumn+1][currentRow-1]+='a';
             }
     }
     else if(currentColumn==7){
-        if(!newPieceBoard[currentColumn-1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow-1].includes('c')) newPieceBoard[currentColumn-1][currentRow-1]+='a';
-        if(!newPieceBoard[currentColumn-1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow].includes('c')) newPieceBoard[currentColumn-1][currentRow]+='a';
-        if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow-1].includes('c')) newPieceBoard[currentColumn][currentRow-1]+='a';
+        if(!newPieceBoard[currentColumn-1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow-1].includes(state)) newPieceBoard[currentColumn-1][currentRow-1]+='a';
+        if(!newPieceBoard[currentColumn-1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow].includes(state)) newPieceBoard[currentColumn-1][currentRow]+='a';
+        if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow-1].includes(state)) newPieceBoard[currentColumn][currentRow-1]+='a';
         
         if(currentRow!=7){
-            if(!newPieceBoard[currentColumn-1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow+1].includes('c')) newPieceBoard[currentColumn-1][currentRow+1]+='a';
-            if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow+1].includes('c')) newPieceBoard[currentColumn][currentRow+1]+='a';
+            if(!newPieceBoard[currentColumn-1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow+1].includes(state)) newPieceBoard[currentColumn-1][currentRow+1]+='a';
+            if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow+1].includes(state)) newPieceBoard[currentColumn][currentRow+1]+='a';
         }
     }
     else{
-        if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow+1].includes('c')) newPieceBoard[currentColumn][currentRow+1]+='a';
-        if(!newPieceBoard[currentColumn+1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow+1].includes('c')) newPieceBoard[currentColumn+1][currentRow+1]+='a';
-        if(!newPieceBoard[currentColumn+1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow].includes('c')) newPieceBoard[currentColumn+1][currentRow]+='a';
-        if(!newPieceBoard[currentColumn-1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow+1].includes('c')) newPieceBoard[currentColumn-1][currentRow+1]+='a';
-        if(!newPieceBoard[currentColumn-1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow].includes('c')) newPieceBoard[currentColumn-1][currentRow]+='a';
+        if(!newPieceBoard[currentColumn][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow+1].includes(state)) newPieceBoard[currentColumn][currentRow+1]+='a';
+        if(!newPieceBoard[currentColumn+1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow+1].includes(state)) newPieceBoard[currentColumn+1][currentRow+1]+='a';
+        if(!newPieceBoard[currentColumn+1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow].includes(state)) newPieceBoard[currentColumn+1][currentRow]+='a';
+        if(!newPieceBoard[currentColumn-1][currentRow+1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow+1].includes(state)) newPieceBoard[currentColumn-1][currentRow+1]+='a';
+        if(!newPieceBoard[currentColumn-1][currentRow].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow].includes(state)) newPieceBoard[currentColumn-1][currentRow]+='a';
         if(currentRow!=0){
-            if(!newPieceBoard[currentColumn-1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow-1].includes('c')) newPieceBoard[currentColumn-1][currentRow-1]+='a';
-            if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow-1].includes('c')) newPieceBoard[currentColumn][currentRow-1]+='a';
-            if(!newPieceBoard[currentColumn+1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow-1].includes('c')) newPieceBoard[currentColumn+1][currentRow-1]+='a';
+            if(!newPieceBoard[currentColumn-1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn-1][currentRow-1].includes(state)) newPieceBoard[currentColumn-1][currentRow-1]+='a';
+            if(!newPieceBoard[currentColumn][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn][currentRow-1].includes(state)) newPieceBoard[currentColumn][currentRow-1]+='a';
+            if(!newPieceBoard[currentColumn+1][currentRow-1].includes(activeColor) && !newPieceBoard[currentColumn+1][currentRow-1].includes(state)) newPieceBoard[currentColumn+1][currentRow-1]+='a';
         }
     }
     
@@ -461,12 +463,52 @@ function knightCheck(newPieceBoard: string[][], currentColumn: number, currentRo
     return newPieceBoard;
 }
 
-function checkmate(pieceBoard: string[][], activeColor: string){
-    console.log(pieceBoard);
-    console.log(activeColor);
+function mate(pieceBoard: string[][]): false | 'b' | 'w' {
+    //clone board
+    let auxBoard:string[][] = []
+    for(let j=0; j<8; j++){
+        const newRow = [];
+        for(let i=0; i<8; i++){
+            newRow.push(pieceBoard[j][i]);
+        }
+        auxBoard.push(newRow);
+    }
+    //first, look for king
+    for(let j=0; j<8; j++){
+        for(let i=0; i<8; i++){
+            if(pieceBoard[j][i]==='bk'){
+                auxBoard = kingCheck(auxBoard, j, i, 'b', 'c');
+                //then check for possible movements and surrounding friendly pieces
+                if(hasPossibleMovements(auxBoard)===false && surroundedByNeighbors(auxBoard,j,i,'b')===false){
+                    return 'w';
+                } 
+                auxBoard = removeActiveColorFromBoard(auxBoard);
+            }
+        }
+    }
+    
+    //same for opposite color
+    for(let j=0; j<8; j++){
+        for(let i=0; i<8; i++){
+            if(pieceBoard[j][i]==='wk'){
+                auxBoard = kingCheck(auxBoard, j, i, 'w', 'c');
+                //then check for possible movements and surrounding friendly pieces
+                if(hasPossibleMovements(auxBoard)===false && surroundedByNeighbors(auxBoard,j,i,'w')===false){
+                    return 'b';
+                } 
+                auxBoard = removeActiveColorFromBoard(auxBoard);
+            }
+        }
+    }
+
+
+    //if neither, not mate
+    return false;
+
         
     return false;
 }
+
 
 function surroundedByNeighbors(pieceBoard:string[][], currentColumn: number, currentRow: number, color: string){
     if(currentRow<7){
@@ -490,14 +532,14 @@ function surroundedByNeighbors(pieceBoard:string[][], currentColumn: number, cur
     return true;
 }
 
-//scans for possible squares for king, if there are none, it's checkmate. "scan for M(ates)"
-function scanForMs(activeKingBoard: string[][]){
+//scans for possible squares for king, if there are none, it's mate
+function hasPossibleMovements(auxBoard: string[][]){
     for(let j=0; j<8; j++){
         for(let i=0; i<8; i++){
-            if(activeKingBoard[j][i].includes('m')) return true; //
+            if(auxBoard[j][i].includes('a')) return true;
         }
     }
     return false;
 }
 
-export {switchCheck, checkmate};
+export {switchCheck, mate};
