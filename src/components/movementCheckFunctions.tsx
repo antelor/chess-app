@@ -463,7 +463,7 @@ function knightCheck(newPieceBoard: string[][], currentColumn: number, currentRo
     return newPieceBoard;
 }
 
-function mate(pieceBoard: string[][]): 'neither' | 'b' | 'w' {
+function mateCheck(pieceBoard: string[][]): 'neither' | 'b' | 'w' {
     //clone board
     let auxBoard:string[][] = []
     for(let j=0; j<8; j++){
@@ -506,6 +506,26 @@ function mate(pieceBoard: string[][]): 'neither' | 'b' | 'w' {
     return 'neither';
 }
 
+function winCheck(pieceBoard: string[][]){
+    const winFlag = [];
+    for(let j=0; j<8; j++){
+        for(let i=0; i<8; i++){
+            if(pieceBoard[j][i]==='bk'){
+                winFlag.push('bk')
+            }
+            if(pieceBoard[j][i]==='wk'){
+                winFlag.push('wk')
+            }
+        }
+    }
+
+    //found both kings -> no winner
+    //only found white king -> white wins
+    //only found black king -> black wins
+    if(winFlag.length===2) return 'neither'
+    else if (winFlag[0]==='wk') return 'w'
+    else return 'b'
+}
 
 function surroundedByNeighbors(pieceBoard:string[][], currentColumn: number, currentRow: number, color: string){
     if(currentRow<7){
@@ -539,4 +559,4 @@ function hasPossibleMovements(auxBoard: string[][]){
     return false;
 }
 
-export {switchCheck, mate};
+export {switchCheck, winCheck, mateCheck};

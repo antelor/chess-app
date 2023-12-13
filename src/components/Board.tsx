@@ -4,7 +4,7 @@ import Piece from './Piece';
 import Square from './Square';
 import '../styles/Board.scss';
 import {basicBoard, startingPieceBoard} from '../assets/basicBoard';
-import {switchCheck, mate} from './movementCheckFunctions';
+import {switchCheck, winCheck, mateCheck} from './movementCheckFunctions';
 import {removeActiveColorFromBoard} from './boardFunctions';
 
 import {DndContext} from '@dnd-kit/core';
@@ -15,6 +15,8 @@ function Board() {
     const [colorTurn, setColorTurn] = useState('w');
     const [turnNumber, setTurnNumber] = useState(0);
     const [mateState, setMateState] = useState('neither');
+    const [winState, setWinState] = useState('neither');
+
 
     function handleDragStart(event: any){
         let newPieceBoard = {...pieceBoard};
@@ -64,12 +66,17 @@ function Board() {
                 setPieceBoard(newPieceBoard);
 
                 //check if mate
-                const mateStatus = mate(newPieceBoard);
+                const mateStatus = mateCheck(newPieceBoard);
                 if(mateStatus!='neither') {
                     console.log(mateStatus + ' did a mate');
                     setMateState(mateStatus);
                 }
-                
+
+                //check if game ended (king is dead)
+                const winStatus = winCheck(newPieceBoard);
+                console.log(winStatus + ' wins');
+                setWinState(winStatus);
+
                 changeTurn();
                 
                 return true;
