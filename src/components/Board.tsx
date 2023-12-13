@@ -4,7 +4,7 @@ import Piece from './Piece';
 import Square from './Square';
 import '../styles/Board.scss';
 import {basicBoard, startingPieceBoard} from '../assets/basicBoard';
-import {switchCheck} from './movementCheckFunctions';
+import {switchCheck, checkmate} from './movementCheckFunctions';
 
 import {DndContext} from '@dnd-kit/core';
 
@@ -13,6 +13,7 @@ function Board() {
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
     const [colorTurn, setColorTurn] = useState('w');
     const [turnNumber, setTurnNumber] = useState(0);
+    const [winState, setWinState] = useState('');
 
     function handleDragStart(event: any){
         let newPieceBoard = {...pieceBoard};
@@ -60,6 +61,14 @@ function Board() {
                 newPieceBoard[destinationColumn][destinationRow] = active.name;
                 newPieceBoard = removeActiveColorFromBoard(newPieceBoard);
                 setPieceBoard(newPieceBoard);
+
+                //check if checkmate
+                if(checkmate(newPieceBoard, activeColor)) {
+                    setWinState('a');
+                    console.log(winState);
+                    console.log('checkmate');
+                }
+                
                 changeTurn();
                 
                 return true;
@@ -76,6 +85,7 @@ function Board() {
             return false;
         }
     }
+
 
     function checkMovement(pieceName: string, destinationColumn: number, destinationRow: number){
         const color = pieceName[0];

@@ -90,7 +90,6 @@ function pawnCheck(newPieceBoard: string[][], currentColumn: number, currentRow:
 }
 
 function bishopCheck(newPieceBoard: string[][], currentColumn: number, currentRow: number, activeColor: string, state: string){
-    console.log(newPieceBoard)
     //up right side movement
     for(let j = currentColumn-1, i = currentRow+1; j >= 0 && i < 8; j--, i++){
         if(newPieceBoard[j][i]!=state && newPieceBoard[j][i]!='' && newPieceBoard[j][i][0]==activeColor) break; //friendly space
@@ -361,7 +360,6 @@ function kingCheck(newPieceBoard: string[][], currentColumn: number, currentRow:
                     //remove duplicate 'c's
                     for(let j=0; j<8; j++){
                         for(let i=0; i<8; i++){
-                            console.log(newPieceBoard[j][i]+'a');
                             if(newPieceBoard[j][i][0]=='c') newPieceBoard[j][i]='c'
                             if(newPieceBoard[j][i][2]=='c') newPieceBoard[j][i].substring(0,2);
                         }
@@ -463,4 +461,43 @@ function knightCheck(newPieceBoard: string[][], currentColumn: number, currentRo
     return newPieceBoard;
 }
 
-export {switchCheck, pawnCheck, bishopCheck, rookCheck, queenCheck, kingCheck, knightCheck};
+function checkmate(pieceBoard: string[][], activeColor: string){
+    console.log(pieceBoard);
+    console.log(activeColor);
+        
+    return false;
+}
+
+function surroundedByNeighbors(pieceBoard:string[][], currentColumn: number, currentRow: number, color: string){
+    if(currentRow<7){
+        if(pieceBoard[currentColumn][currentRow+1][0]!=color) return false;
+    }
+    if(currentRow>0){
+        if(pieceBoard[currentColumn][currentRow-1][0]!=color) return false;
+    }
+    if(currentColumn<7){
+        if(pieceBoard[currentColumn+1][currentRow][0]!=color) return false;
+    }
+    if(currentColumn>0){
+        if(pieceBoard[currentColumn-1][currentRow][0]!=color) return false;
+    }
+    if(currentColumn<7 && currentRow<7){
+        if(pieceBoard[currentColumn+1][currentRow+1][0]!=color) return false;
+    }
+    if(currentRow>0 && currentColumn>0){
+        if(pieceBoard[currentColumn-1][currentRow-1][0]!=color) return false;
+    }
+    return true;
+}
+
+//scans for possible squares for king, if there are none, it's checkmate. "scan for M(ates)"
+function scanForMs(activeKingBoard: string[][]){
+    for(let j=0; j<8; j++){
+        for(let i=0; i<8; i++){
+            if(activeKingBoard[j][i].includes('m')) return true; //
+        }
+    }
+    return false;
+}
+
+export {switchCheck, checkmate};
