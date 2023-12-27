@@ -1,10 +1,40 @@
-.Board{
-    border: 1px solid black;
-    width: fit-content;
-    padding: 10px;
-    background-color: brown;
+.gameContainer{
+    display: flex;
+    flex-direction: column;
 
-    .BoardRow{
+    .win{
+        position: absolute;
         display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-top: 200px;
+        margin-left: 200px;
+
+        background-color: red;
+        width: 100px;
+        height: 100px;
+    }
+
+    .mate{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: yellow;
+        width: 100px;
+        height: 100px;
+    }
+
+    .Board{
+        border: 1px solid black;
+        width: fit-content;
+        padding: 10px;
+        background-color: brown;
+    
+        .BoardRow{
+            display: flex;
+        }
     }
 }
+

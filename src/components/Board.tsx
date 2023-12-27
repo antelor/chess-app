@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Piece from './Piece';
 import Square from './Square';
 import '../styles/Board.scss';
@@ -17,6 +17,14 @@ function Board() {
     const [turnNumber, setTurnNumber] = useState(0);
     const [mateState, setMateState] = useState('neither');
     const [winState, setWinState] = useState('neither');
+
+    useEffect(() => {
+        console.log(winState + ' wins');
+    }, [winState]);
+
+    useEffect(() => {
+        console.log(mateState + ' did a mate');
+    }, [mateState])
 
 
     function handleDragStart(event: any){
@@ -69,13 +77,11 @@ function Board() {
                 //check if mate
                 const mateStatus = mateCheck(newPieceBoard);
                 if(mateStatus!='neither') {
-                    console.log(mateStatus + ' did a mate');
                     setMateState(mateStatus);
                 }
 
                 //check if game ended (king is dead)
                 const winStatus = winCheck(newPieceBoard);
-                console.log(winStatus + ' wins');
                 setWinState(winStatus);
 
                 changeTurn();
@@ -94,7 +100,6 @@ function Board() {
             return false;
         }
     }
-
 
     function checkMovement(pieceName: string, destinationColumn: number, destinationRow: number){
         const color = pieceName[0];
@@ -190,7 +195,10 @@ function Board() {
     }
 
     return (
-        <>
+        <div className='gameContainer'>
+            {winState === 'w' ? <div className='win'>white wins</div> : winState ==='b' ? <div className='win'>black wins</div> : <></>}
+            {mateState === 'w' ? <div className='mate'>white mate</div> : mateState ==='b' ? <div className='mate'>black mate</div> : <></>}
+
             <div className='Board'>
                 <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
                     {basicBoard.map((row, index) => (
@@ -214,8 +222,7 @@ function Board() {
                     ))}
                 </DndContext>
             </div>
-            
-        </>
+        </div>
     )
 }
 
