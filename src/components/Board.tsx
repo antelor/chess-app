@@ -10,10 +10,9 @@ import {removeActiveColorFromBoard} from './boardFunctions';
 
 import {DndContext} from '@dnd-kit/core';
 
-function Board() {
+function Board({colorTurn, setColorTurn} : {colorTurn:string, setColorTurn:any}) {
     //board with every piece location info
     const [pieceBoard, setPieceBoard] = useState(startingPieceBoard);
-    const [colorTurn, setColorTurn] = useState('w');
     const [turnNumber, setTurnNumber] = useState(0);
     const [mateState, setMateState] = useState('neither');
     const [winState, setWinState] = useState('neither');
@@ -77,11 +76,13 @@ function Board() {
                 //check if mate
                 const mateStatus = mateCheck(newPieceBoard);
                 if(mateStatus!='neither') {
+                    console.log(mateState);
                     setMateState(mateStatus);
                 }
 
                 //check if game ended (king is dead)
                 const winStatus = winCheck(newPieceBoard);
+                console.log(winStatus + ' wins');
                 setWinState(winStatus);
 
                 changeTurn();
