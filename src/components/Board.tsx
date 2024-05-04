@@ -76,13 +76,12 @@ function Board({colorTurn, setColorTurn} : {colorTurn:string, setColorTurn:any})
                 //check if mate
                 const mateStatus = mateCheck(newPieceBoard);
                 if(mateStatus!='neither') {
-                    console.log(mateState);
                     setMateState(mateStatus);
                 }
 
                 //check if game ended (king is dead)
                 const winStatus = winCheck(newPieceBoard);
-                console.log(winStatus + ' wins');
+                if(winStatus!='neither') setMateState(mateStatus);
                 setWinState(winStatus);
 
                 changeTurn();
@@ -197,8 +196,8 @@ function Board({colorTurn, setColorTurn} : {colorTurn:string, setColorTurn:any})
 
     return (
         <div className='gameContainer'>
-            {winState === 'w' ? <div className='win'>white wins</div> : winState ==='b' ? <div className='win'>black wins</div> : <></>}
-            {mateState === 'w' ? <div className='mate'>white mate</div> : mateState ==='b' ? <div className='mate'>black mate</div> : <></>}
+            {mateState === 'w' ? <div className='gameStatus mate'>White mate!</div> : mateState ==='b' ? <div className='gameStatus mate'>Black mate!</div> : <></>}
+            {winState === 'w' ? <div className='gameStatus win'>White wins!</div> : winState ==='b' ? <div className='gameStatus win'>Black wins!</div> : <></>}
 
             <div className='Board'>
                 <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
@@ -223,6 +222,8 @@ function Board({colorTurn, setColorTurn} : {colorTurn:string, setColorTurn:any})
                     ))}
                 </DndContext>
             </div>
+
+
         </div>
     )
 }
