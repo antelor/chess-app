@@ -70,12 +70,14 @@ function Board() {
                 const mateStatus = mateCheck(newPieceBoard);
                 if(mateStatus!='neither') {
                     console.log(mateStatus + ' did a mate');
+                    console.log(mateState);
                     setMateState(mateStatus);
                 }
 
                 //check if game ended (king is dead)
                 const winStatus = winCheck(newPieceBoard);
                 console.log(winStatus + ' wins');
+                console.log(winState);
                 setWinState(winStatus);
 
                 changeTurn();
