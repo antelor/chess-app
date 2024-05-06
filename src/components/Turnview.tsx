@@ -3,9 +3,9 @@ import '../styles/Turnview.scss'
 
 function Turnview({turn}: {turn: string}) {
     return (
-        <div className='Turnview'>
+        <div className={`Turnview ${turn}`}>
             Turn
-            <div className= {`turnSquare ${turn}`}></div>
+            <div className= 'turnSquare'></div>
         </div>
     )
 }
