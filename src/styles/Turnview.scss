@@ -1,34 +1,40 @@
 .Turnview{
     margin-left: 20px;
-    font-size: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 25rem; 
-
+    
     .turnSquare{
+        height: 5rem;
+        font-size: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        transition: margin 2s;
+    }
+    
+    .turnSquareColor{
         margin-top:10px;
         width: 40px;
         height: 40px;
 
-        transition: background-color 0.9s;
+        transition: background-color 2s;
     }
     
 }
 
 .w{
-    justify-content: flex-end;
+    margin-top:0;
 
-    .turnSquare{
+    .turnSquareColor{
         background-color: white;
     }
 }
 
 .b{
-    justify-content: flex-start;
+    margin-top:20rem;
 
-    .turnSquare{
+    .turnSquareColor{
         background-color: black;
     }
 }
