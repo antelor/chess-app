@@ -1,24 +1,40 @@
 .Turnview{
     margin-left: 20px;
-    font-size: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
+    height: 25rem; 
+    
     .turnSquare{
+        height: 5rem;
+        font-size: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        transition: margin 2s;
+    }
+    
+    .turnSquareColor{
         margin-top:10px;
         width: 40px;
         height: 40px;
 
-        transition: background-color 0.5s;
+        transition: background-color 2s;
     }
     
-    .w{
+}
+
+.w{
+    margin-top:20rem;
+
+    .turnSquareColor{
         background-color: white;
     }
-    
-    .b{
+}
+
+.b{
+    margin-top:0;
+
+    .turnSquareColor{
         background-color: black;
     }
 }
